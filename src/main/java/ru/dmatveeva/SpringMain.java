@@ -13,7 +13,7 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/db/spring-db.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             VehicleController controller = appCtx.getBean(VehicleController.class);
-            controller.getAll().forEach(System.out::println);
+            //controller.getAll().forEach(System.out::println);
 
         }
     }

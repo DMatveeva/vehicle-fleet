@@ -1,6 +1,8 @@
 package ru.dmatveeva.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.service.VehicleService;
 
@@ -18,8 +20,10 @@ public class VehicleController {
         return vehicle;
     }
 
-    public List<Vehicle> getAll() {
-        //log.info("getAll");
-        return vehicleService.getAll();
+    @GetMapping("/vehicles")
+    public String getAll(Model model) {
+        model.addAttribute("vehicles", vehicleService.getAll());
+        return "vehicles";
     }
+
 }
