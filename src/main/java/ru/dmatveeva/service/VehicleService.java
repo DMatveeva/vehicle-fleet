@@ -11,6 +11,10 @@ public class VehicleService {
 
     private VehicleRepositoryImpl vehicleRepository;
 
+    public VehicleService(VehicleRepositoryImpl vehicleRepository) {
+        this.vehicleRepository = vehicleRepository;
+    }
+
     public List<Vehicle> getAll() {
         return vehicleRepository.getAll();
     }
