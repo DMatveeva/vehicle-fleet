@@ -17,6 +17,8 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <spring.version>5.3.20</spring.version>
+
+        <postgresql.version>42.4.0</postgresql.version>
     </properties>
 
     <build>
@@ -40,6 +42,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!--DataBase-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
     </dependencies>
 
