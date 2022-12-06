@@ -1,9 +1,21 @@
 package ru.dmatveeva.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
+@NamedQueries({
+        @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v")
+})
+
+@Entity
+@Table(name = "vehicles")
 public class Vehicle extends AbstractBaseEntity{
+
+    public static final String ALL = "Vehicle.getAll";
 
     @Column(name = "vin", nullable = false, unique = true)
     private String vin;
@@ -27,6 +39,9 @@ public class Vehicle extends AbstractBaseEntity{
         this.color = color;
         this.mileage = mileage;
         this.productionYear = productionYear;
+    }
+
+    public Vehicle() {
     }
 
     public String getVin() {

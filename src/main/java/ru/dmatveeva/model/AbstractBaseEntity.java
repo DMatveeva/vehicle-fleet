@@ -21,6 +21,8 @@ public abstract class AbstractBaseEntity {
     protected AbstractBaseEntity(Integer id) {
         this.id = id;
     }
+    protected AbstractBaseEntity() {
+    }
 
     public void setId(Integer id) {
         this.id = id;
