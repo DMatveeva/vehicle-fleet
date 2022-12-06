@@ -1,20 +1,30 @@
 package ru.dmatveeva.model;
 
+import javax.persistence.Column;
 import java.math.BigDecimal;
 
 public class Vehicle extends AbstractBaseEntity{
 
+    @Column(name = "vin", nullable = false, unique = true)
     private String vin;
+
+    @Column(name = "cost_usd", nullable = false)
     private BigDecimal costUsd;
 
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @Column(name = "mileage", nullable = false)
     private int mileage;
 
+    @Column(name = "production_year", nullable = false)
     private int productionYear;
 
-    public Vehicle(Integer id, String vin, BigDecimal costUsd, int mileage, int productionYear) {
+    public Vehicle(Integer id, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
         super(id);
         this.vin = vin;
         this.costUsd = costUsd;
+        this.color = color;
         this.mileage = mileage;
         this.productionYear = productionYear;
     }
@@ -33,6 +43,14 @@ public class Vehicle extends AbstractBaseEntity{
 
     public void setCostUsd(BigDecimal costUsd) {
         this.costUsd = costUsd;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public int getMileage() {

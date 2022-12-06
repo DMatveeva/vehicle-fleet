@@ -7,8 +7,9 @@ CREATE TABLE vehicles
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     vin            VARCHAR                           NOT NULL,
-    costUsd         DECIMAL                           NOT NULL,
+    color           VARCHAR                           NOT NULL,
+    cost_usd         DECIMAL                           NOT NULL,
     mileage       INTEGER            NOT NULL,
-    productionYear          INTEGER                NOT NULL,
+    production_year          INTEGER                NOT NULL
 );
 CREATE UNIQUE INDEX vehicle_unique_vin_idx ON vehicles (vin);

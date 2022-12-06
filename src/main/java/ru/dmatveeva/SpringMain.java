@@ -15,7 +15,7 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             VehicleController vehicleController = appCtx.getBean(VehicleController.class);
-            vehicleController.create(new Vehicle(1,"4Y1SL65848Z411439", BigDecimal.TEN, 60000, 2003));
+            vehicleController.create(new Vehicle(1,"4Y1SL65848Z411439", BigDecimal.TEN, "blue", 60000, 2003));
         }
     }
 }
