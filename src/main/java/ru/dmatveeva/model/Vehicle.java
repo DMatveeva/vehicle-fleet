@@ -2,13 +2,30 @@ package ru.dmatveeva.model;
 
 import java.math.BigDecimal;
 
-public class Vehicle {
+public class Vehicle extends AbstractBaseEntity{
 
+    private String vin;
     private BigDecimal costUsd;
 
     private int mileage;
 
     private int productionYear;
+
+    public Vehicle(Integer id, String vin, BigDecimal costUsd, int mileage, int productionYear) {
+        super(id);
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
 
     public BigDecimal getCostUsd() {
         return costUsd;
