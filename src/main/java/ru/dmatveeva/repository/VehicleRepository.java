@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface VehicleRepository {
     List<Vehicle> getAll();
+
+    boolean delete(int id);
+
 }

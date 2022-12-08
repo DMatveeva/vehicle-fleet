@@ -16,7 +16,9 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @NamedQueries({
-        @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v")
+        @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v"),
+        @NamedQuery(name = Vehicle.DELETE, query = "DELETE FROM Vehicle v WHERE v.id=:id"),
+
 })
 
 @Entity
@@ -24,6 +26,7 @@ import java.math.BigDecimal;
 public class Vehicle extends AbstractBaseEntity{
 
     public static final String ALL = "Vehicle.getAll";
+    public static final String DELETE = "Vehicle.delete";
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id", nullable = false)

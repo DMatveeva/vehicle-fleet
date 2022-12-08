@@ -18,4 +18,10 @@ public class VehicleService {
     public List<Vehicle> getAll() {
         return vehicleRepository.getAll();
     }
+
+    public void delete(int id) {
+        vehicleRepository.delete(id);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package ru.dmatveeva.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dmatveeva.model.Vehicle;
 
 import javax.persistence.EntityManager;
@@ -14,8 +15,15 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     EntityManager em;
 
     public List<Vehicle> getAll(){
-
         return em.createNamedQuery(Vehicle.ALL, Vehicle.class)
                 .getResultList();
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(int id) {
+        return em.createNamedQuery(Vehicle.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }

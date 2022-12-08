@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity{
     public static final int START_SEQ = 100000;
 
     @Id
@@ -22,6 +22,10 @@ public abstract class AbstractBaseEntity {
         this.id = id;
     }
     protected AbstractBaseEntity() {
+    }
+
+    public boolean isNew() {
+        return this.id == null;
     }
 
     public void setId(Integer id) {
