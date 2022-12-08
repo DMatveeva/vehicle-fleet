@@ -9,9 +9,6 @@ import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.service.VehicleService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -48,17 +45,17 @@ public class VehicleController {
         return "vehicles";
     }
 
-    /*@PostMapping
+    @PostMapping("/update_or_create")
     public String updateOrCreate(HttpServletRequest request) {
         Vehicle vehicle = new Vehicle();
 
         if (request.getParameter("id").isEmpty()) {
             vehicleService.create(vehicle);
         } else {
-            vehicleService.update(getId(request));
+            vehicleService.update(vehicle);
         }
-        return "redirect:/meals";
-    }*/
+        return "redirect:/all";
+    }
 
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));

@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class VehicleRepositoryImpl implements VehicleRepository{
 
     @PersistenceContext
@@ -25,5 +26,16 @@ public class VehicleRepositoryImpl implements VehicleRepository{
         return em.createNamedQuery(Vehicle.DELETE)
                 .setParameter("id", id)
                 .executeUpdate() != 0;
+    }
+
+    @Override
+    @Transactional
+    public Vehicle save(Vehicle vehicle) {
+        if (vehicle.isNew()) {
+            em.persist(vehicle);
+            return vehicle;
+
+        }
+        return em.merge(vehicle);
     }
 }

@@ -9,4 +9,6 @@ public interface VehicleRepository {
 
     boolean delete(int id);
 
+    Vehicle save(Vehicle vehicle);
+
 }

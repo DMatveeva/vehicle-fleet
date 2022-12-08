@@ -1,14 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-
 <html>
 <body>
 
 <section>
     <h3><spring:message code="vehicle.label"/></h3>
+
+    <form method="get" action="vehicles/all">
+    </form>
+    <hr>
+    <a href="create"><spring:message code="vehicle.add"/></a>
+    <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
@@ -29,6 +32,8 @@
                 <td>${vehicle.costUsd}</td>
                 <td>${vehicle.mileage}</td>
                 <td>${vehicle.productionYear}</td>
+                <td><a href="vehicles/update?id=${vehicle.id}"><spring:message code="common.update"/></a></td>
+                <td><a href="vehicles/delete?id=${vehicle.id}"><spring:message code="common.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>

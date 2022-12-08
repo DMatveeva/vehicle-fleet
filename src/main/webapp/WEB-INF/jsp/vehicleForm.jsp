@@ -10,8 +10,9 @@
   <%--    `meal.new` cause javax.el.ELException - bug tomcat --%>
   <h3><spring:message code="${vehicle.isNew() ? 'vehicle.add' : 'vehicle.edit'}"/></h3>
   <hr>
-  <form method="post" action="vehicles">
+  <form method="post" action="update_or_create">
     <input type="hidden" name="id" value="${vehicle.id}">
+
     <dl>
       <dt><spring:message code="vehicle.color"/>:</dt>
       <dd><input type="text" value="${vehicle.color}" size=40 name="color" required></dd>

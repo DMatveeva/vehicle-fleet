@@ -1,6 +1,7 @@
 package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.repository.VehicleRepositoryImpl;
 
@@ -21,6 +22,14 @@ public class VehicleService {
 
     public void delete(int id) {
         vehicleRepository.delete(id);
+    }
+
+    public void update(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
+    }
+
+    public Vehicle create(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
     }
 
 
