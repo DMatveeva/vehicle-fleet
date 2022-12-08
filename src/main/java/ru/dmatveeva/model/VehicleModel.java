@@ -4,11 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({
+        @NamedQuery(name = VehicleModel.ALL, query = "SELECT vm FROM VehicleModel vm")
+})
 @Entity
 @Table(name = "vehicle_models")
 public class VehicleModel extends AbstractBaseEntity {
+
+    public static final String ALL = "VehicleModel.getAll";
 
     @Column(name = "brand", nullable = false)
     @Enumerated(EnumType.STRING)
