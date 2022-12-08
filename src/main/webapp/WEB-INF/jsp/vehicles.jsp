@@ -13,6 +13,7 @@
         <thead>
         <tr>
             <th><spring:message code="vehicle.vin"/></th>
+            <th><spring:message code="vehicle.model"/></th>
             <th><spring:message code="vehicle.color"/></th>
             <th><spring:message code="vehicle.costUsd"/></th>
             <th><spring:message code="vehicle.mileage"/></th>>
@@ -23,6 +24,7 @@
             <jsp:useBean id="vehicle" type="ru.dmatveeva.model.Vehicle"/>
             <tr>
                 <td><c:out value="${vehicle.vin}"/></td>
+                <td>${vehicle.vehicleModel.brand} ${vehicle.vehicleModel.name}</td>
                 <td>${vehicle.color}</td>
                 <td>${vehicle.costUsd}</td>
                 <td>${vehicle.mileage}</td>

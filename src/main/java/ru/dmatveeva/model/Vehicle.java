@@ -1,10 +1,18 @@
 package ru.dmatveeva.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @NamedQueries({
@@ -16,6 +24,12 @@ import java.math.BigDecimal;
 public class Vehicle extends AbstractBaseEntity{
 
     public static final String ALL = "Vehicle.getAll";
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "model_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    private VehicleModel vehicleModel;
 
     @Column(name = "vin", nullable = false, unique = true)
     private String vin;
@@ -32,8 +46,9 @@ public class Vehicle extends AbstractBaseEntity{
     @Column(name = "production_year", nullable = false)
     private int productionYear;
 
-    public Vehicle(Integer id, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
+    public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
         super(id);
+        this.vehicleModel = vehicleModel;
         this.vin = vin;
         this.costUsd = costUsd;
         this.color = color;
@@ -82,5 +97,13 @@ public class Vehicle extends AbstractBaseEntity{
 
     public void setProductionYear(int productionYear) {
         this.productionYear = productionYear;
+    }
+
+    public VehicleModel getVehicleModel() {
+        return vehicleModel;
+    }
+
+    public void setVehicleModel(VehicleModel vehicleModel) {
+        this.vehicleModel = vehicleModel;
     }
 }
