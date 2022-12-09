@@ -59,6 +59,15 @@ public class Vehicle extends AbstractBaseEntity{
         this.productionYear = productionYear;
     }
 
+    public Vehicle(VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
+        this.vehicleModel = vehicleModel;
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.color = color;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+    }
+
     public Vehicle() {
     }
 

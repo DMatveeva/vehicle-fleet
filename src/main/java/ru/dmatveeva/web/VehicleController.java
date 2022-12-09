@@ -6,18 +6,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.service.VehicleModelService;
 import ru.dmatveeva.service.VehicleService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/vehicles")
 public class VehicleController {
     private VehicleService vehicleService;
+    private VehicleModelService vehicleModelService;
 
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, VehicleModelService vehicleModelService) {
         this.vehicleService = vehicleService;
+        this.vehicleModelService = vehicleModelService;
     }
 
     @GetMapping("/create")
@@ -30,7 +35,7 @@ public class VehicleController {
     public String delete(HttpServletRequest request) {
         int id = getId(request);
         vehicleService.delete(id);
-        return "redirect:/vehicles";
+        return "redirect:/vehicles/all";
     }
 
     @GetMapping("/update")
@@ -47,14 +52,22 @@ public class VehicleController {
 
     @PostMapping("/update_or_create")
     public String updateOrCreate(HttpServletRequest request) {
-        Vehicle vehicle = new Vehicle();
+        String vin = request.getParameter("vin");
+        String model = request.getParameter("model");
+        BigDecimal costUsd = BigDecimal.valueOf(Integer.parseInt(request.getParameter("costUsd")));
+        String color = request.getParameter("color");
+        int mileage = Integer.parseInt(request.getParameter("mileage"));
+        int productionYear = Integer.parseInt(request.getParameter("productionYear"));
+
+        VehicleModel vehicleModel = vehicleModelService.getByName(model);
+        Vehicle vehicle = new Vehicle(vehicleModel, vin, costUsd, color, mileage, productionYear);
 
         if (request.getParameter("id").isEmpty()) {
             vehicleService.create(vehicle);
         } else {
             vehicleService.update(vehicle);
         }
-        return "redirect:/all";
+        return "redirect:/vehicles/all";
     }
 
     private int getId(HttpServletRequest request) {

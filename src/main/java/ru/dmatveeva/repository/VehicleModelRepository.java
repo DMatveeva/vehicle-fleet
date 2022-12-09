@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface VehicleModelRepository {
     List<VehicleModel> getAll();
+
+    VehicleModel getByName(String name);
 }

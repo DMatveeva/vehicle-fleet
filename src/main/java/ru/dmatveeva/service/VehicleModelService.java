@@ -18,4 +18,9 @@ public class VehicleModelService {
     public List<VehicleModel> getAll() {
         return vehicleModelRepository.getAll();
     }
+    public VehicleModel getByName(String name) {
+        return vehicleModelRepository.getByName(name);
+    }
+
+
 }

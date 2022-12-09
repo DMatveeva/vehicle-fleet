@@ -33,7 +33,7 @@
                 <td>${vehicle.mileage}</td>
                 <td>${vehicle.productionYear}</td>
                 <td><a href="vehicles/update?id=${vehicle.id}"><spring:message code="common.update"/></a></td>
-                <td><a href="vehicles/delete?id=${vehicle.id}"><spring:message code="common.delete"/></a></td>
+                <td><a href="delete?id=${vehicle.id}"><spring:message code="common.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>

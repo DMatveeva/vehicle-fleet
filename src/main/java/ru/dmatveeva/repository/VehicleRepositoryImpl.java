@@ -34,7 +34,6 @@ public class VehicleRepositoryImpl implements VehicleRepository{
         if (vehicle.isNew()) {
             em.persist(vehicle);
             return vehicle;
-
         }
         return em.merge(vehicle);
     }

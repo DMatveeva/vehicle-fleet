@@ -20,4 +20,10 @@ public class VehicleModelRepositoryImpl implements VehicleModelRepository {
     public List<VehicleModel> getAll() {
         return em.createNamedQuery(VehicleModel.ALL, VehicleModel.class).getResultList();
     }
+
+    @Override
+    public VehicleModel getByName(String name) {
+        return em.createQuery("SELECT vm FROM VehicleModel vm where vm.name = :nameValue", VehicleModel.class)
+                .setParameter("nameValue", name).getSingleResult();
+    }
 }

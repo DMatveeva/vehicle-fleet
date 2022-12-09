@@ -12,7 +12,14 @@
   <hr>
   <form method="post" action="update_or_create">
     <input type="hidden" name="id" value="${vehicle.id}">
-
+    <dl>
+      <dt><spring:message code="vehicle.vin"/>:</dt>
+      <dd><input type="text" value="${vehicle.vin}" size=40 name="vin" required></dd>
+    </dl>
+    <dl>
+      <dt><spring:message code="vehicle.model"/>:</dt>
+      <dd><input type="text" value="${vehicle.vehicleModel}" size=40 name="model" required></dd>
+    </dl>
     <dl>
       <dt><spring:message code="vehicle.color"/>:</dt>
       <dd><input type="text" value="${vehicle.color}" size=40 name="color" required></dd>

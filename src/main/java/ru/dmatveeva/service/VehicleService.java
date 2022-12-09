@@ -1,18 +1,17 @@
 package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.repository.VehicleRepositoryImpl;
+import ru.dmatveeva.repository.VehicleRepository;
 
 import java.util.List;
 
 @Service
 public class VehicleService {
 
-    private VehicleRepositoryImpl vehicleRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public VehicleService(VehicleRepositoryImpl vehicleRepository) {
+    public VehicleService(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
 

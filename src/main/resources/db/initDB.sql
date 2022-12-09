@@ -29,5 +29,3 @@ CREATE TABLE vehicles
     FOREIGN KEY (model_id) REFERENCES vehicle_models (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX vehicle_unique_vin_idx ON vehicles (vin);
-
-CREATE UNIQUE INDEX vehicles_unique_model_idx ON vehicles (model_id);
