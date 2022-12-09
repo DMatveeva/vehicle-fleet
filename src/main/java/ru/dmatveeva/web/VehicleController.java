@@ -40,9 +40,11 @@ public class VehicleController {
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model){
-        model.addAttribute("vehicle", getId(request));
+        Vehicle vehicle = vehicleService.get(getId(request));
+        model.addAttribute("vehicle", vehicle);
         return "vehicleForm";
     }
+
 
     @GetMapping("/all")
     public String getAll(Model model) {
@@ -54,17 +56,18 @@ public class VehicleController {
     public String updateOrCreate(HttpServletRequest request) {
         String vin = request.getParameter("vin");
         String model = request.getParameter("model");
-        BigDecimal costUsd = BigDecimal.valueOf(Integer.parseInt(request.getParameter("costUsd")));
+        BigDecimal costUsd = BigDecimal.valueOf(Double.parseDouble(request.getParameter("costUsd")));
         String color = request.getParameter("color");
         int mileage = Integer.parseInt(request.getParameter("mileage"));
         int productionYear = Integer.parseInt(request.getParameter("productionYear"));
 
         VehicleModel vehicleModel = vehicleModelService.getByName(model);
-        Vehicle vehicle = new Vehicle(vehicleModel, vin, costUsd, color, mileage, productionYear);
-
-        if (request.getParameter("id").isEmpty()) {
+        String id = request.getParameter("id");
+        if (id.isEmpty()) {
+            Vehicle vehicle = new Vehicle(vehicleModel, vin, costUsd, color, mileage, productionYear);
             vehicleService.create(vehicle);
         } else {
+            Vehicle vehicle = new Vehicle(Integer.parseInt(id), vehicleModel, vin, costUsd, color, mileage, productionYear);
             vehicleService.update(vehicle);
         }
         return "redirect:/vehicles/all";

@@ -32,4 +32,8 @@ public class VehicleService {
     }
 
 
+    public Vehicle get(int id) {
+        return vehicleRepository.get(id);
+
+    }
 }

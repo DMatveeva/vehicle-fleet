@@ -7,7 +7,6 @@
 
 <section>
   <jsp:useBean id="vehicle" type="ru.dmatveeva.model.Vehicle" scope="request"/>
-  <%--    `meal.new` cause javax.el.ELException - bug tomcat --%>
   <h3><spring:message code="${vehicle.isNew() ? 'vehicle.add' : 'vehicle.edit'}"/></h3>
   <hr>
   <form method="post" action="update_or_create">
@@ -18,7 +17,7 @@
     </dl>
     <dl>
       <dt><spring:message code="vehicle.model"/>:</dt>
-      <dd><input type="text" value="${vehicle.vehicleModel}" size=40 name="model" required></dd>
+      <dd><input type="text" value="${vehicle.vehicleModel.name}" size=40 name="model" required></dd>
     </dl>
     <dl>
       <dt><spring:message code="vehicle.color"/>:</dt>

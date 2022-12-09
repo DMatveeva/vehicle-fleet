@@ -11,4 +11,5 @@ public interface VehicleRepository {
 
     Vehicle save(Vehicle vehicle);
 
+    Vehicle get(int id);
 }
