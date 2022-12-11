@@ -12,6 +12,7 @@ import ru.dmatveeva.service.VehicleService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -28,6 +29,8 @@ public class VehicleController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("vehicle", new Vehicle());
+        List<VehicleModel> models = vehicleModelService.getAll();
+        model.addAttribute("models", models);
         return "vehicleForm";
     }
 
@@ -42,6 +45,11 @@ public class VehicleController {
     public String update(HttpServletRequest request, Model model){
         Vehicle vehicle = vehicleService.get(getId(request));
         model.addAttribute("vehicle", vehicle);
+        List<VehicleModel> models = vehicleModelService.getAll();
+        VehicleModel vehicleModel = vehicle.getVehicleModel();
+        models.remove(vehicleModel);
+        models.add(0, vehicleModel);
+        model.addAttribute("models", models);
         return "vehicleForm";
     }
 

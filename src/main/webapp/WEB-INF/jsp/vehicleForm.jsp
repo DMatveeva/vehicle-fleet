@@ -17,7 +17,14 @@
     </dl>
     <dl>
       <dt><spring:message code="vehicle.model"/>:</dt>
-      <dd><input type="text" value="${vehicle.vehicleModel.name}" size=40 name="model" required></dd>
+      <dd>
+        <label>
+          <select name="vehicle.model">
+              <c:forEach items="${models}" var="model">
+              <option value="${model.id}">${model.name}</option>
+            </c:forEach>
+          </select>
+        </label>
     </dl>
     <dl>
       <dt><spring:message code="vehicle.color"/>:</dt>
