@@ -1,5 +1,6 @@
 package ru.dmatveeva.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,8 @@ import ru.dmatveeva.model.Driver;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.service.DriverService;
 import ru.dmatveeva.service.VehicleService;
+import ru.dmatveeva.to.DriverTo;
+import ru.dmatveeva.util.DriverUtils;
 
 import java.util.List;
 
@@ -24,8 +27,9 @@ public class RestDriverController {
     }
 
     @GetMapping()
-    public List<Driver> getAll() {
-        return driverService.getAll();
+    public List<DriverTo> getAll() {
+        List<DriverTo> tos = DriverUtils.getDriverTos(driverService.getAll());
+        return tos;
     }
 
 }

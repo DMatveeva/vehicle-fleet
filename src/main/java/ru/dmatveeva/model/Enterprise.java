@@ -1,14 +1,19 @@
 package ru.dmatveeva.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -31,7 +36,6 @@ public class Enterprise extends AbstractBaseEntity{
 
     public Enterprise() {
     }
-
     @Column(name = "name")
     private String name;
 
