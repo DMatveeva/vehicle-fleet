@@ -1,5 +1,7 @@
 package ru.dmatveeva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public abstract class AbstractBaseEntity{
     protected AbstractBaseEntity() {
     }
 
+    @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }

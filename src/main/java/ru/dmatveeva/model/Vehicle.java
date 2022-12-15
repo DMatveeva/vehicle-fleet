@@ -1,5 +1,8 @@
 package ru.dmatveeva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,15 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v"),
         @NamedQuery(name = Vehicle.DELETE, query = "DELETE FROM Vehicle v WHERE v.id=:id"),
-
 })
 
 @Entity
@@ -48,6 +53,13 @@ public class Vehicle extends AbstractBaseEntity{
 
     @Column(name = "production_year", nullable = false)
     private int productionYear;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
+    @JsonIgnore
+    private List<Driver> drivers;
+
+    @ManyToOne
+    private Enterprise enterprise;
 
     public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
         super(id);
@@ -117,5 +129,21 @@ public class Vehicle extends AbstractBaseEntity{
 
     public void setVehicleModel(VehicleModel vehicleModel) {
         this.vehicleModel = vehicleModel;
+    }
+
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
+    }
+
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public void setEnterprise(Enterprise enterprise) {
+        this.enterprise = enterprise;
     }
 }
