@@ -6,6 +6,10 @@ DELETE
 FROM drivers;
 DELETE
 FROM enterprises;
+DELETE
+FROM managers;
+DELETE
+FROM enterprises_managers;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO vehicle_models (brand, name, vehicle_type, num_seats, engine_type, load_capacity)
@@ -28,3 +32,13 @@ VALUES ('Dominic', 'Toretto', 1000.00, 20, 100002, 100005, False),
        ('Mia', 'Toretto', 3000.00, 5, 100004, 100007, False),
        ('Brian', 'O''Conner', 4000.00, 5, 100004, 100007, False);
 
+
+INSERT INTO managers (login, password, first_name, second_name)
+VALUES ('amy.lee@gmail@gmail.com', 'amy', 'Amy', 'Lee'),
+       ('john.smith@gmail.com', 'j', 'John', 'Smith');
+
+INSERT INTO enterprises_managers (enterprise_id, manager_id)
+VALUES (100002, 100012),
+       (100003, 100012),
+       (100003, 100013),
+       (100004, 100013);

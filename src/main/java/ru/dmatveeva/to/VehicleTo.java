@@ -25,25 +25,15 @@ public class VehicleTo {
 
     private Integer model_id;
 
-    @Column(name = "vin", nullable = false, unique = true)
     private String vin;
 
-    @Column(name = "cost_usd", nullable = false)
     private BigDecimal costUsd;
 
-    @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name = "mileage", nullable = false)
     private int mileage;
 
-    @Column(name = "production_year", nullable = false)
     private int productionYear;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
-    @JsonIgnore
-    private List<Driver> drivers;
-
-    @ManyToOne
     private Enterprise enterprise;
 }
