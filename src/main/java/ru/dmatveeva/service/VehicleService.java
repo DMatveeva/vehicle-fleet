@@ -1,9 +1,11 @@
 package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
+import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.repository.VehicleRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -35,5 +37,9 @@ public class VehicleService {
     public Vehicle get(int id) {
         return vehicleRepository.get(id);
 
+    }
+
+    public List<Vehicle> getByEnterprise(Enterprise enterprise) {
+        return vehicleRepository.getByEnterprise(enterprise);
     }
 }

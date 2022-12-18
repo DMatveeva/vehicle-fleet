@@ -5,9 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.dmatveeva.model.Enterprise;
+import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.service.VehicleService;
+import ru.dmatveeva.to.DriverTo;
+import ru.dmatveeva.to.VehicleTo;
+import ru.dmatveeva.util.DriverUtils;
+import ru.dmatveeva.util.SecurityUtil;
+import ru.dmatveeva.util.VehicleUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,8 +31,14 @@ public class RestVehicleController {
     }
 
     @GetMapping()
-    public List<Vehicle> getAll() {
-        return vehicleService.getAll();
+    public List<VehicleTo> getAll() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        Manager manager = SecurityUtil.getAuthManager();
+        List<Enterprise> enterprises = manager.getEnterprise();
+        for (Enterprise enterprise: enterprises) {
+            vehicles.addAll(vehicleService.getByEnterprise(enterprise));
+        }
+        return VehicleUtils.getVehicleTos(vehicles);
     }
 
 }

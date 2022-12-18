@@ -1,39 +1,57 @@
 package ru.dmatveeva.to;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import ru.dmatveeva.model.Driver;
-import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.VehicleModel;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class VehicleTo {
 
     @JsonProperty
     private Integer id;
 
+    @JsonProperty
     private Integer model_id;
 
+    @JsonProperty
     private String vin;
 
+    @JsonProperty
     private BigDecimal costUsd;
 
+    @JsonProperty
     private String color;
 
+    @JsonProperty
     private int mileage;
 
+    @JsonProperty
     private int productionYear;
 
-    private Enterprise enterprise;
+    @JsonProperty
+    private Integer enterprise_id;
+
+    public VehicleTo(Integer id, Integer model_id, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterprise_id) {
+        this.id = id;
+        this.model_id = model_id;
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.color = color;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+        this.enterprise_id = enterprise_id;
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleTo{" +
+                "id=" + id +
+                ", model_id=" + model_id +
+                ", vin='" + vin + '\'' +
+                ", costUsd=" + costUsd +
+                ", color='" + color + '\'' +
+                ", mileage=" + mileage +
+                ", productionYear=" + productionYear +
+                ", enterprise_id=" + enterprise_id +
+                '}';
+    }
 }

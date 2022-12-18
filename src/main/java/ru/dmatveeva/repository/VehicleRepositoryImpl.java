@@ -1,7 +1,11 @@
 package ru.dmatveeva.repository;
 
+import org.hibernate.jpa.QueryHints;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.dmatveeva.model.Enterprise;
+import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.Vehicle;
 
 import javax.persistence.EntityManager;
@@ -41,5 +45,15 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     @Override
     public Vehicle get(int id) {
         return em.find(Vehicle.class, id);
+    }
+
+    @Override
+    public List<Vehicle> getByEnterprise(Enterprise enterprise) {
+
+        List<Vehicle> vehicles = em.createNamedQuery(Vehicle.BY_ENTERPRISE_ID, Vehicle.class)
+                .setParameter(1, enterprise)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+        return vehicles;
     }
 }
