@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.model.VehicleModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -55,5 +56,17 @@ public class VehicleRepositoryImpl implements VehicleRepository{
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getResultList();
         return vehicles;
+    }
+
+    @Override
+    @Transactional
+    public Vehicle save(Vehicle vehicle, Integer modelId, Integer enterpriseId) {
+        vehicle.setVehicleModel(em.getReference(VehicleModel.class, modelId));
+        vehicle.setEnterprise(em.getReference(Enterprise.class, enterpriseId));
+        if (vehicle.isNew()) {
+            em.persist(vehicle);
+            return vehicle;
+        }
+        return em.merge(vehicle);
     }
 }

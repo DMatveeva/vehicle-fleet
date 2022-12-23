@@ -1,9 +1,11 @@
 package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.repository.VehicleRepository;
+import ru.dmatveeva.util.VehicleGenerator;
 
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +35,10 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+    public Vehicle create(Vehicle vehicle, Integer modelId, Integer enterpriseId) {
+        return vehicleRepository.save(vehicle, modelId, enterpriseId);
+    }
+
 
     public Vehicle get(int id) {
         return vehicleRepository.get(id);
@@ -41,5 +47,10 @@ public class VehicleService {
 
     public List<Vehicle> getByEnterprise(Enterprise enterprise) {
         return vehicleRepository.getByEnterprise(enterprise);
+    }
+
+    public Vehicle update(Vehicle newVehicle, Integer modelId, Integer enterpriseId) {
+        Assert.notNull(newVehicle, "vehicle must not be null");
+        return vehicleRepository.save(newVehicle, modelId, enterpriseId);
     }
 }

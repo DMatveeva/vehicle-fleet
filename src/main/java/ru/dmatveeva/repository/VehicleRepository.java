@@ -15,4 +15,6 @@ public interface VehicleRepository {
     Vehicle get(int id);
 
     List<Vehicle> getByEnterprise(Enterprise enterprise);
+
+    Vehicle save(Vehicle vehicle, Integer modelId, Integer enterpriseId);
 }

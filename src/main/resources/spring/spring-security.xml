@@ -1,6 +1,7 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:p="http://www.springframework.org/schema/p"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
              http://www.springframework.org/schema/beans/spring-beans.xsd
 	         http://www.springframework.org/schema/security
@@ -9,12 +10,17 @@
 
     <http pattern="/resources/**" security="none"/>
 
-    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain">
         <http-basic/>
         <intercept-url pattern="/rest/**" access="isAuthenticated()"/>
+        <!--<csrf disabled="true"/>-->
+        <csrf token-repository-ref="tokenRepository"/>
     </http>
 
-        <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+    <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+    <beans:bean id="tokenRepository"
+            class="org.springframework.security.web.csrf.CookieCsrfTokenRepository"
+            p:cookieHttpOnly="false"/>
 
     <!-- <http>
          <intercept-url pattern="/login" access="permitAll()"/>
@@ -31,7 +37,7 @@
  -->
     <authentication-manager>
         <authentication-provider user-service-ref="managerService">
-              <password-encoder ref="noopEncoder"/>
+            <password-encoder ref="noopEncoder"/>
             <!--
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="SELECT email, password, enabled FROM users WHERE email = ?"

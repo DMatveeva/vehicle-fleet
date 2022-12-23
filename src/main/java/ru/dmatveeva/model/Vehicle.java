@@ -6,6 +6,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,7 +57,7 @@ public class Vehicle extends AbstractBaseEntity{
     @Column(name = "production_year", nullable = false)
     private int productionYear;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade= CascadeType.PERSIST)
     @JsonIgnore
     private List<Driver> drivers;
 
@@ -83,6 +84,17 @@ public class Vehicle extends AbstractBaseEntity{
     }
 
     public Vehicle() {
+    }
+
+    public Vehicle(VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, List<Driver> drivers, Enterprise enterprise) {
+        this.vehicleModel = vehicleModel;
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.color = color;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+        this.drivers = drivers;
+        this.enterprise = enterprise;
     }
 
     public String getVin() {

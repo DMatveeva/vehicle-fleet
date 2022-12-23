@@ -9,6 +9,8 @@ FROM enterprises;
 DELETE
 FROM managers;
 DELETE
+FROM users;
+DELETE
 FROM enterprises_managers;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -34,11 +36,25 @@ VALUES ('Dominic', 'Toretto', 1000.00, 20, 100002, 100005, False),
 
 
 INSERT INTO managers (login, password, first_name, second_name)
-VALUES ('amy.lee@gmail@gmail.com', 'amy', 'Amy', 'Lee'),
+VALUES ('amy.lee@gmail.com', 'amy', 'Amy', 'Lee'),
+       ('user.user@gmail.com', 'pass', 'User', 'User'),
        ('john.smith@gmail.com', 'j', 'John', 'Smith');
+
+/*INSERT INTO users (login, password, first_name, second_name)
+VALUES ('user.user@gmail.com', 'pass', 'User', 'User'),
+       ('user1.user1@gmail.com', 'pass', 'User1', 'User1');*/
 
 INSERT INTO enterprises_managers (enterprise_id, manager_id)
 VALUES (100002, 100012),
        (100003, 100012),
        (100003, 100013),
        (100004, 100013);
+
+
+INSERT INTO drivers (first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
+VALUES
+       ('D1', 'D1', 1000.00, 20, 100002, null, False),
+       ('D2', 'D2', 1000.00, 20, 100002, null, False),
+       ('D3', 'D3', 1000.00, 20, 100002, null, False),
+       ('D4', 'D4', 1000.00, 20, 100002, null, False)
+       ;

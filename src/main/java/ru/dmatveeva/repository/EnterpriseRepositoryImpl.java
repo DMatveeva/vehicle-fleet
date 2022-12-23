@@ -20,4 +20,10 @@ public class EnterpriseRepositoryImpl implements EnterpriseRepository{
         return em.createNamedQuery(Enterprise.ALL, Enterprise.class)
                 .getResultList();
     }
+
+    @Override
+    public Enterprise get(int id) {
+        return em.find(Enterprise.class, id);
+    }
+
 }

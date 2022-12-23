@@ -1,14 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
+<head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
 <body>
 
 <section>
     <h3><spring:message code="vehicle.label"/></h3>
 
-    <form method="get" action="vehicles/all">
-    </form>
+    <form:form method="get" action="vehicles/all">
+    </form:form>
     <hr>
     <a href="create"><spring:message code="vehicle.add"/></a>
     <hr>

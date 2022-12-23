@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS drivers CASCADE;
 DROP TABLE IF EXISTS enterprises CASCADE;
 DROP TABLE IF EXISTS vehicle_models CASCADE;
 DROP TABLE IF EXISTS managers CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS enterprises_managers CASCADE;
 
 
@@ -54,7 +55,7 @@ CREATE TABLE drivers
     salary_usd         DECIMAL                           NOT NULL,
     experience       INTEGER            NOT NULL,
     enterprise_id       INTEGER            NOT NULL,
-    vehicle_id       INTEGER            NOT NULL,
+    vehicle_id       INTEGER            ,
     is_active          BOOLEAN          NOT NULL    DEFAULT FALSE,
     FOREIGN KEY (enterprise_id) REFERENCES enterprises (id) ON DELETE CASCADE,
     FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE
@@ -77,6 +78,15 @@ CREATE TABLE enterprises_managers
     CONSTRAINT enterprises_managers_idx UNIQUE (enterprise_id, manager_id),
     FOREIGN KEY (enterprise_id) REFERENCES enterprises (id) ON DELETE CASCADE,
     FOREIGN KEY (manager_id) REFERENCES managers (id) ON DELETE CASCADE
+);
+
+CREATE TABLE users
+(
+    id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    login            VARCHAR                           NOT NULL,
+    password         VARCHAR                           NOT NULL,
+    first_name            VARCHAR                           NOT NULL,
+    second_name           VARCHAR                           NOT NULL
 );
 
 

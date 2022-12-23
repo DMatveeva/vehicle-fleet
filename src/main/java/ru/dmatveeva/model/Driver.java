@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 @NamedQueries({
         @NamedQuery(name = Driver.ALL, query = "SELECT d FROM Driver d"),
+        @NamedQuery(name = Driver.BY_ENTERPRISE_ID, query = "SELECT d FROM Driver d WHERE d.enterprise=?1")
 })
 
 @Entity
@@ -17,6 +18,8 @@ import java.math.BigDecimal;
 public class Driver extends AbstractBaseEntity{
 
     public static final String ALL = "Driver.getAll";
+    public static final String BY_ENTERPRISE_ID = "Driver.getByEnterpriseId";
+
 
 
     public Driver() {

@@ -10,7 +10,7 @@ public class VehicleTo {
     private Integer id;
 
     @JsonProperty
-    private Integer model_id;
+    private Integer modelId;
 
     @JsonProperty
     private String vin;
@@ -28,30 +28,97 @@ public class VehicleTo {
     private int productionYear;
 
     @JsonProperty
-    private Integer enterprise_id;
+    private Integer enterpriseId;
 
-    public VehicleTo(Integer id, Integer model_id, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterprise_id) {
+    public VehicleTo() {
+    }
+
+    public VehicleTo(Integer id, Integer modelId, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterpriseId) {
         this.id = id;
-        this.model_id = model_id;
+        this.modelId = modelId;
         this.vin = vin;
         this.costUsd = costUsd;
         this.color = color;
         this.mileage = mileage;
         this.productionYear = productionYear;
-        this.enterprise_id = enterprise_id;
+        this.enterpriseId = enterpriseId;
     }
 
     @Override
     public String toString() {
         return "VehicleTo{" +
                 "id=" + id +
-                ", model_id=" + model_id +
+                ", modelId=" + modelId +
                 ", vin='" + vin + '\'' +
                 ", costUsd=" + costUsd +
                 ", color='" + color + '\'' +
                 ", mileage=" + mileage +
                 ", productionYear=" + productionYear +
-                ", enterprise_id=" + enterprise_id +
+                ", enterpriseId=" + enterpriseId +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getModelId() {
+        return modelId;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public BigDecimal getCostUsd() {
+        return costUsd;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public int getProductionYear() {
+        return productionYear;
+    }
+
+    public Integer getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setModelId(Integer modelId) {
+        this.modelId = modelId;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public void setCostUsd(BigDecimal costUsd) {
+        this.costUsd = costUsd;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public void setProductionYear(int productionYear) {
+        this.productionYear = productionYear;
+    }
+
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId;
     }
 }
