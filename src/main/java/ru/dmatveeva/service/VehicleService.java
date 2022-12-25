@@ -23,6 +23,10 @@ public class VehicleService {
         return vehicleRepository.getAll();
     }
 
+    public List<Vehicle> getAllPaginated(int offset, int pageSize) {
+        return vehicleRepository.getAllPaginated(offset, pageSize);
+    }
+
     public void delete(int id) {
         vehicleRepository.delete(id);
     }
@@ -47,6 +51,10 @@ public class VehicleService {
 
     public List<Vehicle> getByEnterprise(Enterprise enterprise) {
         return vehicleRepository.getByEnterprise(enterprise);
+    }
+
+    public List<Vehicle> getByEnterprisePaginated(Enterprise enterprise, int offset, int pageSize) {
+        return vehicleRepository.getByEnterprisePaginated(enterprise, offset, pageSize);
     }
 
     public Vehicle update(Vehicle newVehicle, Integer modelId, Integer enterpriseId) {

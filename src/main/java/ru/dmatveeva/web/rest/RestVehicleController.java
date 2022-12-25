@@ -53,6 +53,21 @@ public class RestVehicleController {
         return VehicleUtils.getVehicleTos(vehicles);
     }
 
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public List<VehicleTo> getAllPaginated(@PathVariable int offset, @PathVariable int pageSize) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        Manager manager = SecurityUtil.getAuthManager();
+        List<Enterprise> enterprises = manager.getEnterprise();
+        for (Enterprise enterprise: enterprises) {
+            List<Vehicle> vehiclesByEnterprise = vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize);
+            vehicles.addAll(vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize));
+            if (vehiclesByEnterprise.size() == pageSize) {
+                break;
+            }
+        }
+        return VehicleUtils.getVehicleTos(vehicles);
+    }
+
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleTo> create(@RequestBody VehicleTo vehicleTo) {
         Manager manager = SecurityUtil.getAuthManager();

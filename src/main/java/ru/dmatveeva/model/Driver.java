@@ -20,7 +20,15 @@ public class Driver extends AbstractBaseEntity{
     public static final String ALL = "Driver.getAll";
     public static final String BY_ENTERPRISE_ID = "Driver.getByEnterpriseId";
 
-
+    public Driver(String firstName, String secondName, BigDecimal salaryUSD, int drivingExperienceYears, Enterprise enterprise, Vehicle vehicle, boolean isActive) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.salaryUSD = salaryUSD;
+        this.drivingExperienceYears = drivingExperienceYears;
+        this.enterprise = enterprise;
+        this.vehicle = vehicle;
+        this.isActive = isActive;
+    }
 
     public Driver() {
     }

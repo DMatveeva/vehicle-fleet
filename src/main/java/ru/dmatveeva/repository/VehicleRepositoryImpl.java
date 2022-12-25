@@ -11,6 +11,7 @@ import ru.dmatveeva.model.VehicleModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,13 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     public List<Vehicle> getAll(){
         return em.createNamedQuery(Vehicle.ALL, Vehicle.class)
                 .getResultList();
+    }
+
+    public List<Vehicle> getAllPaginated(int offset, int pageSize){
+        Query query = em.createNamedQuery(Vehicle.ALL, Vehicle.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
 
     @Override
@@ -56,6 +64,16 @@ public class VehicleRepositoryImpl implements VehicleRepository{
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getResultList();
         return vehicles;
+    }
+
+    @Override
+    public List<Vehicle> getByEnterprisePaginated(Enterprise enterprise, int offset, int pageSize) {
+        Query query = em.createNamedQuery(Vehicle.BY_ENTERPRISE_ID_SORTED, Vehicle.class)
+                .setParameter(1, enterprise)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false);
+        query.setFirstResult(offset);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
 
     @Override

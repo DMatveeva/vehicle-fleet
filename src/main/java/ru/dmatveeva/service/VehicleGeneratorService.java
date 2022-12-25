@@ -43,10 +43,14 @@ public class VehicleGeneratorService {
     private final int OLDEST_YEAR_OF_PRODUCTION = 1980;
     private final int NEWEST_YEAR_OF_PRODUCTION = 2020;
 
+    private final int MAX_NUM_DRIVERS_FOR_VEHICLE = 2;
+
+    private static int driverNum = 0;
+
 
     List<VehicleModel> vehicleModels;
 
-    List<Driver> drivers;
+ //   List<Driver> drivers;
 
     List<String> colors = List.of(
             "Black",
@@ -67,14 +71,6 @@ public class VehicleGeneratorService {
         vehicleModels = vehicleModelRepository.getAll();
     }
 
-    private void populateDrivers(Enterprise enterprise) {
-        drivers = driverRepository.getByEnterprise(enterprise);
-    }
-
-    private void clearDrivers() {
-        drivers.clear();
-    }
-
 
     public void generateVehiclesForEnterprises(List<Integer> enterpriseIds, int numVehicles) {
         populateVehicleModels();
@@ -90,19 +86,18 @@ public class VehicleGeneratorService {
     }
 
     private List<Vehicle> generateVehiclesForEnterprise(Enterprise enterprise, int numVehicles) {
-        populateDrivers(enterprise);
 
         List<Vehicle> vehicles = new ArrayList<>();
         for (int i = 0; i < numVehicles; i++) {
-            vehicles.add(generateVehicle(enterprise, numVehicles));
+            vehicles.add(generateVehicle(enterprise));
         }
 
-        clearDrivers();
         return vehicles;
     }
 
-    private Vehicle generateVehicle(Enterprise enterprise, int numVehicles) {
+    private Vehicle generateVehicle(Enterprise enterprise) {
         boolean isActive = getIsDriverActive();
+        Vehicle vehicle = new Vehicle();
 
         VehicleModel vehicleModel = getVehicleModel();
         String vin = generateVin();
@@ -110,31 +105,52 @@ public class VehicleGeneratorService {
         String color = getColor();
         int mileage = getMileage();
         int productionYear = getProductionYear();
-        List<Driver> drivers = getDrivers(numVehicles, isActive);
-        Vehicle vehicle = new Vehicle(vehicleModel, vin, costUsd, color, mileage, productionYear, drivers, enterprise);
+
+        List<Driver> drivers = getDrivers(enterprise, vehicle, isActive);
+        vehicle.setVehicleModel(vehicleModel);
+        vehicle.setVin(vin);
+        vehicle.setCostUsd(costUsd);
+        vehicle.setColor(color);
+        vehicle.setMileage(mileage);
+        vehicle.setProductionYear(productionYear);
+        vehicle.setDrivers(drivers);
+        vehicle.setEnterprise(enterprise);
         drivers.forEach(d -> d.setVehicle(vehicle));
 
         return vehicle;
     }
 
-    private List<Driver> getDrivers(int numVehicles, boolean isActive) {
+    private List<Driver> getDrivers(Enterprise enterprise, Vehicle vehicle, boolean isActive) {
         List<Driver> driversForVehicle = new ArrayList<>();
-        if (drivers.size() > 0) {
-
-
-            int numDriversForVehicle = new Random().nextInt(0, drivers.size());
-            for (int i = 0; i < numDriversForVehicle; i++) {
-                int randomIndex = new Random().nextInt(0, drivers.size() );
-                Driver driver = drivers.get(randomIndex);
-                if (isActive) {
-                    driver.setActive(true);
-                    isActive = false;
-                }
-                drivers.remove(driver);
-            }
+        int numDrivers = new Random().nextInt(0, MAX_NUM_DRIVERS_FOR_VEHICLE);
+        for(int i = 0; i < numDrivers; i++) {
+            Driver driver = getDriver(enterprise, vehicle, isActive);
+            isActive = false;
+            driversForVehicle.add(driver);
         }
         return driversForVehicle;
     }
+
+    private Driver getDriver(Enterprise enterprise, Vehicle vehicle, boolean isActive) {
+        String firstName = "FN" + String.valueOf(driverNum);
+        String secondName = "SN" + String.valueOf(driverNum);
+        driverNum++;
+        BigDecimal salaryUSD = generateSalary();
+        int drivingExperienceYears = getExperienceYears();
+        return new Driver(firstName, secondName, salaryUSD, drivingExperienceYears, enterprise, vehicle, isActive);
+    }
+
+    private BigDecimal generateSalary() {
+        return new BigDecimal(BigInteger.valueOf(new Random().nextInt(1000, 40001)), 2);
+    }
+
+    private int getExperienceYears() {
+        return new Random().nextInt(2, 41);
+    }
+
+    /*
+        this.isActive = isActive;
+    }*/
 
     private boolean getIsDriverActive() {
         int randomIndex = new Random().nextInt(1, 11);

@@ -23,9 +23,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v"),
+        @NamedQuery(name = Vehicle.ALL, query = "SELECT v FROM Vehicle v ORDER BY v.id"),
         @NamedQuery(name = Vehicle.DELETE, query = "DELETE FROM Vehicle v WHERE v.id=:id"),
         @NamedQuery(name = Vehicle.BY_ENTERPRISE_ID, query = "SELECT v FROM Vehicle v WHERE v.enterprise=?1"),
+        @NamedQuery(name = Vehicle.BY_ENTERPRISE_ID_SORTED, query = "SELECT v FROM Vehicle v WHERE v.enterprise=?1 ORDER BY v.id")
 })
 
 @Entity
@@ -35,6 +36,7 @@ public class Vehicle extends AbstractBaseEntity{
     public static final String ALL = "Vehicle.getAll";
     public static final String DELETE = "Vehicle.delete";
     public static final String BY_ENTERPRISE_ID = "Vehicle.getByEnterpriseId";
+    public static final String BY_ENTERPRISE_ID_SORTED = "Vehicle.getByEnterpriseIdSorted";
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id", nullable = false)
