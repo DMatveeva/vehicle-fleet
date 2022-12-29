@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/vehicles")
+@RequestMapping("/vehicletotot") //TODO
 public class VehicleController {
     private VehicleService vehicleService;
     private VehicleModelService vehicleModelService;

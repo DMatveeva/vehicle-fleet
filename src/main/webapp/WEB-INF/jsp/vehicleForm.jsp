@@ -9,7 +9,7 @@
   <jsp:useBean id="vehicle" type="ru.dmatveeva.model.Vehicle" scope="request"/>
   <h3><spring:message code="${vehicle.isNew() ? 'vehicle.add' : 'vehicle.edit'}"/></h3>
   <hr>
-  <form method="post" action="update_or_create">
+  <form class="form-inline my-2" method="post" action="update_or_create">
     <input type="hidden" name="id" value="${vehicle.id}">
     <dl>
       <dt><spring:message code="vehicle.vin"/>:</dt>

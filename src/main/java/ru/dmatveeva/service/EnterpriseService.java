@@ -19,4 +19,8 @@ public class EnterpriseService {
         return enterpriseRepository.getAll();
     }
 
+    public Enterprise get(Integer id) {
+        return enterpriseRepository.get(id);
+    }
+
 }

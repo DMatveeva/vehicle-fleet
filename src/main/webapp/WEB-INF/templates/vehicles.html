@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:spring="http://www.w3.org/1999/XSL/Transform"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicles</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+    <script src="webjars/jquery/3.6.1/jquery.min.js" defer></script>
+
+</head>
+<body>
+<script type="text/javascript" src="resources/js/fleet.js" defer></script>
+
+<h1 style="text-align:center" >Vehicles</h1>
+<div style="text-align: center">
+    <a style="text-align:center" th:href="@{/vehicles/create}">Add vehicle</a>
+</div>
+
+
+<table  class="table table-bordered">
+    <tr>
+        <th>Vin</th>
+        <th>Model</th>
+        <th>Color</th>
+        <th>Cost (USD)</th>
+        <th>Mileage</th>
+        <th>Production Year</th>
+    </tr>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.vin}"/>
+        <td th:text="${vehicle.vehicleModel.name}"/>
+        <td th:text="${vehicle.color}"/>
+        <td th:text="${vehicle.costUsd}"/>
+        <td th:text="${vehicle.mileage}"/>
+        <td th:text="${vehicle.productionYear}"/>
+        <td><a href="update?id=${vehicle.id}">Update</a></td>
+        <td><a href="delete?id=${vehicle.id}">Delete</a></td>
+    </tr>
+</table>
+    <!--		Start Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:spring="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/dropdowns.css">
+
+</head>
+<body>
+<section>
+    <h3>
+        <div style="text-align: center">
+            <a style="text-align:center">Add vehicle</a>
+        </div>
+        <!--<th:block class="block" align="center" th:if="${vehicle.isNew()}">Add vehicle</th:block>
+        <th:block align="center" th:if="${!vehicle.isNew()}">Update vehicle</th:block>
+        <spring:message code="${vehicle.isNew() ? 'vehicle.add' : 'vehicle.edit'}"/>-->
+    </h3>
+    <hr>
+    <form  class="form-horizontal" role="form" align="center" action="#" th:action="@{/update_or_create}" th:object="${vehicle}"
+          method="post">
+
+        <p><input type="hidden" th:field="*{id}"/></p>
+
+        <div class = "form-group">
+            <label for = "vin" class = "col-sm-2 control-label">Vin: </label>
+
+            <div class = "col-sm-10">
+                <input type = "text" class = "form-control-lg" id = "vin" >
+            </div>
+        </div>
+
+        <div class = "form-group">
+            <label for = "model" class = "col-sm-2 control-label">Model: </label>
+
+            <div class="dropdown">
+                <select class = "form-control-lg" th:field="*{vehicleModel}">
+                    <option th:each="model : ${models}"
+                            th:value="${model.id}"
+                            th:text="${model.name}"/>
+                </select>
+            </div>
+        </div>
+
+        <div class = "form-group">
+            <label for = "color" class = "col-sm-2 control-label">Color: </label>
+
+            <div class = "col-sm-10">
+                <input type = "text" class = "form-control-lg" id = "color">
+            </div>
+        </div>
+        <div class = "form-group">
+            <label for = "cost" class = "col-sm-2 control-label">Cost (USD): </label>
+
+            <div class = "col-sm-10">
+                <input type = "number" class = "form-control-lg" id = "cost">
+            </div>
+        </div>
+        <div class = "form-group">
+            <label for = "mileage" class = "col-sm-2 control-label">Mileage: </label>
+
+            <div class = "col-sm-10">
+                <input type = "number" class = "form-control-lg" id = "mileage">
+            </div>
+        </div>
+        <div class = "form-group">
+            <label for = "year" class = "col-sm-2 control-label">Production year: </label>
+
+            <div class = "col-sm-10">
+                <input type = "number" class = "form-control-lg" id = "year">
+            </div>
+        </div>
+
+        <!--<p>Color: <input type="text" th:field="*{color}"/></p>
+        <p>Cost (USD): <input type="number" th:field="*{costUsd}"/></p>
+        <p>Mileage: <input type="number" th:field="*{mileage}"/></p>
+        <p>Production year: <input type="number" th:field="*{productionYear}"/></p>-->
+
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+
+
+</body>
+</html>

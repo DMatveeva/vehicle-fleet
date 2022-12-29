@@ -17,6 +17,19 @@
         <csrf token-repository-ref="tokenRepository"/>
     </http>
 
+    <http>
+        <intercept-url pattern="/login" access="permitAll()"/>
+        <intercept-url pattern="/vehicles/**" access="permitAll()"/>
+        <intercept-url pattern="/**" access="permitAll()"/>
+        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+
+        <form-login login-page="/login" default-target-url="/enterprises"
+                    authentication-failure-url="/login?error=true"
+                    login-processing-url="/login"/>
+        <logout logout-success-url="/login"/>
+        <csrf disabled="true"/>
+    </http>
+
     <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
     <beans:bean id="tokenRepository"
             class="org.springframework.security.web.csrf.CookieCsrfTokenRepository"
