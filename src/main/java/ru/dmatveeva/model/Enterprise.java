@@ -52,6 +52,9 @@ public class Enterprise extends AbstractBaseEntity{
     @JsonIgnore
     private List<Manager> manager;
 
+    @Column(name = "time_zone")
+    private String localTimeZone;
+
     public String getName() {
         return name;
     }
@@ -90,5 +93,13 @@ public class Enterprise extends AbstractBaseEntity{
 
     public void setManager(List<Manager> manager) {
         this.manager = manager;
+    }
+
+    public String getLocalTimeZone() {
+        return localTimeZone;
+    }
+
+    public void setLocalTimeZone(String localTimeZone) {
+        this.localTimeZone = localTimeZone;
     }
 }

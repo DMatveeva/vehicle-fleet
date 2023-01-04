@@ -1,5 +1,6 @@
 package ru.dmatveeva.web.rest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +26,13 @@ import ru.dmatveeva.util.VehicleGenerator;
 import ru.dmatveeva.util.VehicleUtils;
 
 import java.net.URI;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping(value = RestVehicleController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,18 +61,31 @@ public class RestVehicleController {
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
-    public List<VehicleTo> getAllPaginated(@PathVariable int offset, @PathVariable int pageSize) {
+    public List<VehicleTo> getAllPaginated(TimeZone timezone,
+                                           @PathVariable int offset, @PathVariable int pageSize) {
         List<Vehicle> vehicles = new ArrayList<>();
+        List<VehicleTo> vehicleTos = new ArrayList<>();
         Manager manager = SecurityUtil.getAuthManager();
         List<Enterprise> enterprises = manager.getEnterprise();
         for (Enterprise enterprise: enterprises) {
             List<Vehicle> vehiclesByEnterprise = vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize);
             vehicles.addAll(vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize));
+
+            String enterpriseTimeZoneStr = enterprise.getLocalTimeZone();
+            ZoneId enterpriseZoneId = ZoneId.of(enterpriseTimeZoneStr);
+            TimeZone enterpriseTimeZone = TimeZone.getTimeZone(enterpriseZoneId);
+            long enterpriseOffset = enterpriseTimeZone.getRawOffset();
+            long clientOffset = timezone.getRawOffset() * 2L;
+            long finalOffset = enterpriseOffset + clientOffset;
+
+            vehicleTos.addAll(VehicleUtils.getVehicleTosWithLocalTime(vehicles, finalOffset));
             if (vehiclesByEnterprise.size() == pageSize) {
                 break;
             }
         }
-        return VehicleUtils.getVehicleTos(vehicles);
+
+
+        return vehicleTos;
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)

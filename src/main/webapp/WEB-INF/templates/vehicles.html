@@ -22,18 +22,26 @@
     <tr>
         <th>Vin</th>
         <th>Model</th>
+        <th>Enterprise</th>
         <th>Color</th>
         <th>Cost (USD)</th>
         <th>Mileage</th>
         <th>Production Year</th>
+        <th>Purchase Date</th>
     </tr>
     <tr th:each="vehicle : ${vehicles}">
         <td th:text="${vehicle.vin}"/>
         <td th:text="${vehicle.vehicleModel.name}"/>
+        <td th:text="${vehicle.enterprise.name}"/>
         <td th:text="${vehicle.color}"/>
         <td th:text="${vehicle.costUsd}"/>
         <td th:text="${vehicle.mileage}"/>
         <td th:text="${vehicle.productionYear}"/>
+        <!--<td th:text="${vehicle.purchaseDate}"/>-->
+        <td th:text="${#dates.format(vehicle.purchaseDate, 'dd-MM-yyyy HH:mm')}"/>
+<!--
+        <td th:text="${#dates.format(vehicle.purchaseDate.getTime() + ${offset}, 'dd-MM-yyyy HH:mm')}"/>
+-->
         <td><a href="update?id=${vehicle.id}">Update</a></td>
         <td><a href="delete?id=${vehicle.id}">Delete</a></td>
     </tr>

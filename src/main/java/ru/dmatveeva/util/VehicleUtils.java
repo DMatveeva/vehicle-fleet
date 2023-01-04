@@ -1,20 +1,25 @@
 package ru.dmatveeva.util;
 
 import ru.dmatveeva.model.AbstractBaseEntity;
-import ru.dmatveeva.model.Driver;
 import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.to.DriverTo;
 import ru.dmatveeva.to.VehicleTo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class VehicleUtils {
 
-    public static List<VehicleTo> getVehicleTos(List<Vehicle> drivers) {
-        return drivers.stream()
+    public static List<VehicleTo> getVehicleTos(List<Vehicle> vehicles) {
+        return vehicles.stream()
                 .map(VehicleUtils::getVehicleTo)
+                .collect(Collectors.toList());
+    }
+
+    public static List<VehicleTo> getVehicleTosWithLocalTime(List<Vehicle> vehicles, long offset) {
+        return vehicles.stream()
+                .map(v -> VehicleUtils.getVehicleToWithLocalTime(v, offset))
                 .collect(Collectors.toList());
     }
 
@@ -26,7 +31,22 @@ public class VehicleUtils {
                 vehicle.getColor(),
                 vehicle.getMileage(),
                 vehicle.getProductionYear(),
-                vehicle.getEnterprise().getId());
+                vehicle.getEnterprise().getId(),
+                vehicle.getPurchaseDate());
+    }
+
+    public static VehicleTo getVehicleToWithLocalTime(Vehicle vehicle, long offset) {
+        long localTimeOffset = vehicle.getPurchaseDate().getTime() + offset;
+        Date localDate = new Date(localTimeOffset);
+        return new VehicleTo(vehicle.getId(),
+                vehicle.getVehicleModel().getId(),
+                vehicle.getVin(),
+                vehicle.getCostUsd(),
+                vehicle.getColor(),
+                vehicle.getMileage(),
+                vehicle.getProductionYear(),
+                vehicle.getEnterprise().getId(),
+                localDate);
     }
 
     public static Vehicle getVehicleFromTo(VehicleTo vehicleTo) {
@@ -37,7 +57,8 @@ public class VehicleUtils {
                 vehicleTo.getCostUsd(),
                 vehicleTo.getColor(),
                 vehicleTo.getMileage(),
-                vehicleTo.getProductionYear());
+                vehicleTo.getProductionYear(),
+                vehicleTo.getPurchaseDate());
     }
 
     public static void checkEnterpriseIsConsistent(Manager manager, Integer enterprise_id) {

@@ -20,6 +20,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @NamedQueries({
@@ -66,6 +67,9 @@ public class Vehicle extends AbstractBaseEntity{
     @ManyToOne
     private Enterprise enterprise;
 
+    @Column(name = "purchase_date")
+    private Date purchaseDate;
+
     public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
         super(id);
         this.vehicleModel = vehicleModel;
@@ -97,6 +101,17 @@ public class Vehicle extends AbstractBaseEntity{
         this.productionYear = productionYear;
         this.drivers = drivers;
         this.enterprise = enterprise;
+    }
+
+    public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Date purchaseDate) {
+        super(id);
+        this.vehicleModel = vehicleModel;
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.color = color;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+        this.purchaseDate = purchaseDate;
     }
 
     public String getVin() {
@@ -161,5 +176,13 @@ public class Vehicle extends AbstractBaseEntity{
 
     public void setEnterprise(Enterprise enterprise) {
         this.enterprise = enterprise;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }

@@ -16,7 +16,8 @@ CREATE TABLE enterprises
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     name            VARCHAR                           NOT NULL,
-    city           VARCHAR                           NOT NULL
+    city           VARCHAR                           NOT NULL,
+    time_zone           VARCHAR                           NOT NULL
 );
 CREATE UNIQUE INDEX enterprises_unique_name_idx ON enterprises (name);
 
@@ -43,6 +44,7 @@ CREATE TABLE vehicles
     mileage       INTEGER            NOT NULL,
     production_year          INTEGER                NOT NULL,
     enterprise_id       INTEGER            NOT NULL,
+    purchase_date        TIMESTAMP,
     FOREIGN KEY (model_id) REFERENCES vehicle_models (id) ON DELETE CASCADE,
     FOREIGN KEY (enterprise_id) REFERENCES enterprises (id) ON DELETE CASCADE
 );

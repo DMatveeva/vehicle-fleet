@@ -1,8 +1,10 @@
 package ru.dmatveeva.to;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class VehicleTo {
 
@@ -30,10 +32,14 @@ public class VehicleTo {
     @JsonProperty
     private Integer enterpriseId;
 
+    @JsonProperty
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm")
+    private Date purchaseDate;
+
     public VehicleTo() {
     }
 
-    public VehicleTo(Integer id, Integer modelId, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterpriseId) {
+    public VehicleTo(Integer id, Integer modelId, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterpriseId, Date purchaseDate) {
         this.id = id;
         this.modelId = modelId;
         this.vin = vin;
@@ -42,6 +48,7 @@ public class VehicleTo {
         this.mileage = mileage;
         this.productionYear = productionYear;
         this.enterpriseId = enterpriseId;
+        this.purchaseDate = purchaseDate;
     }
 
     @Override
@@ -120,5 +127,13 @@ public class VehicleTo {
 
     public void setEnterpriseId(Integer enterpriseId) {
         this.enterpriseId = enterpriseId;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }

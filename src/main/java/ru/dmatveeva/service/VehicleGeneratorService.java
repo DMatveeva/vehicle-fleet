@@ -15,8 +15,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
@@ -46,6 +48,9 @@ public class VehicleGeneratorService {
     private final int MAX_NUM_DRIVERS_FOR_VEHICLE = 2;
 
     private static int driverNum = 0;
+
+    private static Date MIN_DATE_OF_PURCHASE_2000 = new Date(946684800000L);
+    private static Date MAX_DATE_OF_PURCHASE_2020 = new Date(1577836800000L);
 
 
     List<VehicleModel> vehicleModels;
@@ -105,6 +110,7 @@ public class VehicleGeneratorService {
         String color = getColor();
         int mileage = getMileage();
         int productionYear = getProductionYear();
+        Date purchaseDate = generateDate(MIN_DATE_OF_PURCHASE_2000, MAX_DATE_OF_PURCHASE_2020);
 
         List<Driver> drivers = getDrivers(enterprise, vehicle, isActive);
         vehicle.setVehicleModel(vehicleModel);
@@ -115,10 +121,25 @@ public class VehicleGeneratorService {
         vehicle.setProductionYear(productionYear);
         vehicle.setDrivers(drivers);
         vehicle.setEnterprise(enterprise);
+        vehicle.setPurchaseDate(purchaseDate);
         drivers.forEach(d -> d.setVehicle(vehicle));
 
         return vehicle;
     }
+
+
+
+    public Date generateDate(Date startInclusive, Date endExclusive) {
+        long startMillis = startInclusive.getTime();
+        long endMillis = endExclusive.getTime();
+        long randomMillisSinceEpoch = ThreadLocalRandom
+                .current()
+                .nextLong(startMillis, endMillis);
+
+        return new Date(randomMillisSinceEpoch);
+    }
+
+
 
     private List<Driver> getDrivers(Enterprise enterprise, Vehicle vehicle, boolean isActive) {
         List<Driver> driversForVehicle = new ArrayList<>();
