@@ -12,6 +12,10 @@ DELETE
 FROM users;
 DELETE
 FROM enterprises_managers;
+DELETE
+FROM tracks;
+DELETE
+FROM vehicle_coordinates;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO vehicle_models (brand, name, vehicle_type, num_seats, engine_type, load_capacity)
@@ -58,3 +62,12 @@ VALUES
        ('D3', 'D3', 1000.00, 20, 100002, null, False),
        ('D4', 'D4', 1000.00, 20, 100002, null, False)
        ;
+
+INSERT INTO tracks(id, vehicle_id)
+values (100019, 100005);
+
+
+INSERT INTO vehicle_coordinates(id, track_id, lat, lon, position, visited)
+values (100020, 100019, 55.7538337, 37.6211812, st_setsrid(st_makepoint(37.6211812, 55.7538337), 4326),  '2008-01-01 17:00:00');
+INSERT INTO vehicle_coordinates(id, track_id, lat, lon, position, visited)
+values (100021, 100019, 56.7538337, 38.6211812, st_setsrid(st_makepoint(38.6211812, 56.7538337), 4326),  '2008-01-01 19:00:00');

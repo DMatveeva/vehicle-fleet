@@ -1,4 +1,4 @@
-package ru.dmatveeva.repository;
+package ru.dmatveeva.repository.impl;
 
 import org.hibernate.jpa.QueryHints;
 import org.springframework.dao.support.DataAccessUtils;
@@ -8,6 +8,7 @@ import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.repository.VehicleRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class VehicleRepositoryImpl implements VehicleRepository{
+public class VehicleRepositoryImpl implements VehicleRepository {
 
     @PersistenceContext
     EntityManager em;

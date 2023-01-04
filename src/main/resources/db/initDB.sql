@@ -1,3 +1,4 @@
+
 DROP TABLE IF EXISTS vehicles CASCADE;
 DROP TABLE IF EXISTS drivers CASCADE;
 DROP TABLE IF EXISTS enterprises CASCADE;
@@ -5,11 +6,14 @@ DROP TABLE IF EXISTS vehicle_models CASCADE;
 DROP TABLE IF EXISTS managers CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS enterprises_managers CASCADE;
+DROP TABLE IF EXISTS tracks CASCADE;
+DROP TABLE IF EXISTS vehicle_coordinates CASCADE;
 
 
 DROP SEQUENCE IF EXISTS global_seq;
 
-CREATE SEQUENCE global_seq START WITH 100000;
+/*CREATE EXTENSION postgis;
+*/CREATE SEQUENCE global_seq START WITH 100000;
 
 
 CREATE TABLE enterprises
@@ -95,3 +99,21 @@ CREATE TABLE users
 CREATE UNIQUE INDEX vehicle_unique_vin_idx ON vehicles (vin);
 
 
+CREATE TABLE tracks
+(
+    id        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    vehicle_id       INTEGER            ,
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE
+);
+
+CREATE TABLE vehicle_coordinates
+(
+    id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    track_id        INTEGER not null ,
+    lat           FLOAT                 NOT NULL,
+    lon           FLOAT                 NOT NULL,
+    position      geometry(POINT, 4326) NOT NULL,
+    visited        TIMESTAMP NOT NULL ,
+    FOREIGN KEY (track_id) REFERENCES tracks (id) ON DELETE CASCADE
+
+);

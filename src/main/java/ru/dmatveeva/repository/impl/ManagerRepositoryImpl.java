@@ -1,16 +1,17 @@
-package ru.dmatveeva.repository;
+package ru.dmatveeva.repository.impl;
 
 import org.hibernate.jpa.QueryHints;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import ru.dmatveeva.model.Manager;
+import ru.dmatveeva.repository.ManagerRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class ManagerRepositoryImpl implements ManagerRepository{
+public class ManagerRepositoryImpl implements ManagerRepository {
 
     @PersistenceContext
     EntityManager em;

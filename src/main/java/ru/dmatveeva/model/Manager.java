@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "managers")
 public class Manager extends AbstractBaseEntity {
 
-    public static final String BY_LOGIN = "Vehicle.getByLogin";
+    public static final String BY_LOGIN = "Manager.getByLogin";
 
     public Manager() {
     }

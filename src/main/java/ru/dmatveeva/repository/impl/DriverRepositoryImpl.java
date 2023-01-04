@@ -1,4 +1,4 @@
-package ru.dmatveeva.repository;
+package ru.dmatveeva.repository.impl;
 
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.dmatveeva.model.Driver;
 import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.repository.DriverRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class DriverRepositoryImpl implements DriverRepository{
+public class DriverRepositoryImpl implements DriverRepository {
 
     @PersistenceContext
     EntityManager em;
