@@ -1,22 +1,5 @@
 package ru.dmatveeva.util;
 
-import org.apache.commons.text.RandomStringGenerator;
-import ru.dmatveeva.model.Driver;
-import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleModel;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
-import static org.apache.commons.text.CharacterPredicates.DIGITS;
-import static org.apache.commons.text.CharacterPredicates.LETTERS;
-
 public class VehicleGenerator {
    /* private static final int VIN_LENGTH = 17;
     private static final int MAX_MILEAGE = 500_000;

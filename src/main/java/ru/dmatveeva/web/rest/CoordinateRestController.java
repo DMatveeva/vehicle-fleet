@@ -1,18 +1,15 @@
 package ru.dmatveeva.web.rest;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dmatveeva.model.Track;
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleCoordinate;
+import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.service.CoordinateService;
 import ru.dmatveeva.to.VehicleCoordinateTo;
 import ru.dmatveeva.util.CoordinateUtils;
-import ru.dmatveeva.util.VehicleUtils;
 
 import java.util.List;
 

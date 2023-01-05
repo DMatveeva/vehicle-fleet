@@ -2,7 +2,7 @@ package ru.dmatveeva.util;
 
 import ru.dmatveeva.model.AbstractBaseEntity;
 import ru.dmatveeva.model.Manager;
-import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.to.VehicleTo;
 
 import java.util.Date;

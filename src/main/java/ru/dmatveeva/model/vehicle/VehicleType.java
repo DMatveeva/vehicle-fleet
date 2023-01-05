@@ -1,4 +1,4 @@
-package ru.dmatveeva.model;
+package ru.dmatveeva.model.vehicle;
 
 public enum VehicleType {
 

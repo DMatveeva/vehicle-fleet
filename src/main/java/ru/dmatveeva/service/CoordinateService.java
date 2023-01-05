@@ -2,7 +2,7 @@ package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
 import ru.dmatveeva.model.Track;
-import ru.dmatveeva.model.VehicleCoordinate;
+import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.repository.CoordinateRepository;
 
 import java.util.List;

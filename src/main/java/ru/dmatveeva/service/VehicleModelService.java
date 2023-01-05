@@ -1,7 +1,7 @@
 package ru.dmatveeva.service;
 
 import org.springframework.stereotype.Service;
-import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.repository.VehicleModelRepository;
 
 import java.util.List;

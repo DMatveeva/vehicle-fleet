@@ -1,8 +1,8 @@
 package ru.dmatveeva.model;
 
+import ru.dmatveeva.model.vehicle.Vehicle;
+
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 

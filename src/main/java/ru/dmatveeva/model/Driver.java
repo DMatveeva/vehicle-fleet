@@ -1,5 +1,7 @@
 package ru.dmatveeva.model;
 
+import ru.dmatveeva.model.vehicle.Vehicle;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

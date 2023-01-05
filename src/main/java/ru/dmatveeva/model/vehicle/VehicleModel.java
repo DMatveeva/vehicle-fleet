@@ -1,4 +1,8 @@
-package ru.dmatveeva.model;
+package ru.dmatveeva.model.vehicle;
+
+import ru.dmatveeva.model.AbstractBaseEntity;
+import ru.dmatveeva.model.Brand;
+import ru.dmatveeva.model.EngineType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

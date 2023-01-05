@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dmatveeva.model.Driver;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.repository.DriverRepository;
 
 import javax.persistence.EntityManager;

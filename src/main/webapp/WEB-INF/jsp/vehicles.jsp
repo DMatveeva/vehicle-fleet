@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <c:forEach items="${requestScope.vehicles}" var="vehicle">
-            <jsp:useBean id="vehicle" type="ru.dmatveeva.model.Vehicle"/>
+            <jsp:useBean id="vehicle" type="ru.dmatveeva.model.vehicle.Vehicle"/>
             <tr>
                 <td><c:out value="${vehicle.vin}"/></td>
                 <td>${vehicle.vehicleModel.brand} ${vehicle.vehicleModel.name}</td>

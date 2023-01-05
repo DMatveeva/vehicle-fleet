@@ -1,10 +1,8 @@
 package ru.dmatveeva.util;
 
 
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleCoordinate;
+import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.to.VehicleCoordinateTo;
-import ru.dmatveeva.to.VehicleTo;
 
 import java.util.List;
 import java.util.stream.Collectors;

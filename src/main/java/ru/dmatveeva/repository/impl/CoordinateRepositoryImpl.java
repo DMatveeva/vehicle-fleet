@@ -3,10 +3,8 @@ package ru.dmatveeva.repository.impl;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Track;
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleCoordinate;
+import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.repository.CoordinateRepository;
 
 import javax.persistence.EntityManager;

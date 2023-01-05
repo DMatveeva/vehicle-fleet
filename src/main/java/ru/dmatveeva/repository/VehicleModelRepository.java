@@ -1,7 +1,6 @@
 package ru.dmatveeva.repository;
 
-import org.springframework.stereotype.Repository;
-import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.model.vehicle.VehicleModel;
 
 import java.util.List;
 

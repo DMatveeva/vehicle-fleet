@@ -1,24 +1,20 @@
 package ru.dmatveeva.web;
 
-import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.model.vehicle.Vehicle;
+import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.service.EnterpriseService;
 import ru.dmatveeva.service.VehicleModelService;
 import ru.dmatveeva.service.VehicleService;
-import ru.dmatveeva.to.VehicleTo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.zone.ZoneRules;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

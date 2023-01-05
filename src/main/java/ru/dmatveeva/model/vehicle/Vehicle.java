@@ -1,10 +1,11 @@
-package ru.dmatveeva.model;
+package ru.dmatveeva.model.vehicle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import ru.dmatveeva.model.AbstractBaseEntity;
+import ru.dmatveeva.model.Driver;
+import ru.dmatveeva.model.Enterprise;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -32,7 +32,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
-public class Vehicle extends AbstractBaseEntity{
+public class Vehicle extends AbstractBaseEntity {
 
     public static final String ALL = "Vehicle.getAll";
     public static final String DELETE = "Vehicle.delete";

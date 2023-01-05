@@ -3,7 +3,6 @@ package ru.dmatveeva.repository.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.repository.EnterpriseRepository;
 
 import javax.persistence.EntityManager;

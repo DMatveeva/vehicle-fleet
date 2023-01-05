@@ -6,7 +6,7 @@
 <body>
 
 <section>
-  <jsp:useBean id="vehicle" type="ru.dmatveeva.model.Vehicle" scope="request"/>
+  <jsp:useBean id="vehicle" type="ru.dmatveeva.model.vehicle.Vehicle" scope="request"/>
   <h3><spring:message code="${vehicle.isNew() ? 'vehicle.add' : 'vehicle.edit'}"/></h3>
   <hr>
   <form class="form-inline my-2" method="post" action="update_or_create">

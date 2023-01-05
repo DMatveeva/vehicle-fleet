@@ -4,8 +4,8 @@ import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.stereotype.Service;
 import ru.dmatveeva.model.Driver;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
-import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.model.vehicle.Vehicle;
+import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.repository.DriverRepository;
 import ru.dmatveeva.repository.EnterpriseRepository;
 import ru.dmatveeva.repository.VehicleModelRepository;
@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;

@@ -1,7 +1,7 @@
 package ru.dmatveeva.repository;
 
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.model.vehicle.Vehicle;
 
 import java.util.List;
 

@@ -3,11 +3,9 @@ package ru.dmatveeva.service;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Vehicle;
+import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.repository.VehicleRepository;
-import ru.dmatveeva.util.VehicleGenerator;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service

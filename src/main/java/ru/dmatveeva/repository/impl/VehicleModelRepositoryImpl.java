@@ -1,14 +1,11 @@
 package ru.dmatveeva.repository.impl;
 
-import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.stereotype.Repository;
-import ru.dmatveeva.model.VehicleModel;
+import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.repository.VehicleModelRepository;
-import ru.dmatveeva.service.VehicleModelService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @Repository

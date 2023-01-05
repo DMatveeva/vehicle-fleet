@@ -1,14 +1,10 @@
 package ru.dmatveeva.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.dmatveeva.model.Driver;
-import ru.dmatveeva.model.Vehicle;
 import ru.dmatveeva.service.DriverService;
-import ru.dmatveeva.service.VehicleService;
 import ru.dmatveeva.to.DriverTo;
 import ru.dmatveeva.util.DriverUtils;
 

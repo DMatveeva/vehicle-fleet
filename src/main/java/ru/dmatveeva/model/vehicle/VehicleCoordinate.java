@@ -1,11 +1,9 @@
-package ru.dmatveeva.model;
+package ru.dmatveeva.model.vehicle;
 
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.PrecisionModel;
-import org.hibernate.annotations.Type;
+import ru.dmatveeva.model.AbstractBaseEntity;
+import ru.dmatveeva.model.Track;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <c:forEach items="${requestScope.models}" var="model">
-            <jsp:useBean id="model" type="ru.dmatveeva.model.VehicleModel"/>
+            <jsp:useBean id="model" type="ru.dmatveeva.model.vehicle.VehicleModel"/>
             <tr>
                 <td>${model.brand}</td>
                 <td>${model.name}</td>

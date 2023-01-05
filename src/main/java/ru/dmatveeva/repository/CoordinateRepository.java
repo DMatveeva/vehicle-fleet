@@ -1,7 +1,7 @@
 package ru.dmatveeva.repository;
 
 import ru.dmatveeva.model.Track;
-import ru.dmatveeva.model.VehicleCoordinate;
+import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 
 import java.util.List;
 
