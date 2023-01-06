@@ -21,6 +21,9 @@ public class VehicleModelService {
     public VehicleModel getByName(String name) {
         return vehicleModelRepository.getByName(name);
     }
+    public VehicleModel get(int id) {
+        return vehicleModelRepository.get(id);
+    }
 
 
 }

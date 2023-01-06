@@ -3,8 +3,10 @@ package ru.dmatveeva.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleModel;
@@ -71,14 +73,21 @@ public class VehicleController {
     }
 
     @PostMapping("/update_or_create")
-    public String updateOrCreate(HttpServletRequest request) {
-        String vin = request.getParameter("vin");
+    public String updateOrCreate(@RequestParam("id") String id,
+                                 @RequestParam("vin") String vin,
+                                 @RequestParam("vehicleModel") Integer vehicleModelId,
+                                 @RequestParam("color") String color,
+                                 @RequestParam("costUsd") BigDecimal costUsd,
+                                 @RequestParam("mileage") Integer mileage,
+                                 @RequestParam("productionYear") Integer productionYear
+                                 ) {
+        /*String vin = request.getParameter("vin");
         String model = request.getParameter("model");
         BigDecimal costUsd = BigDecimal.valueOf(Double.parseDouble(request.getParameter("costUsd")));
         String color = request.getParameter("color");
         int mileage = Integer.parseInt(request.getParameter("mileage"));
         int productionYear = Integer.parseInt(request.getParameter("productionYear"));
-
+     //   Date purchaseDate = new Date()Date(request.getParameter("purchaseDate"));
 
         VehicleModel vehicleModel = vehicleModelService.getByName(model);
         String id = request.getParameter("id");
@@ -88,7 +97,11 @@ public class VehicleController {
         } else {
             Vehicle vehicle = new Vehicle(Integer.parseInt(id), vehicleModel, vin, costUsd, color, mileage, productionYear);
             vehicleService.update(vehicle);
-        }
+        }*/
+
+        VehicleModel vehicleModel = vehicleModelService.get(vehicleModelId);
+
+
         return "redirect:/vehicles?enterpriseId={}";
     }
 

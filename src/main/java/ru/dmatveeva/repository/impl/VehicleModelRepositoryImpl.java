@@ -1,6 +1,7 @@
 package ru.dmatveeva.repository.impl;
 
 import org.springframework.stereotype.Repository;
+import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.repository.VehicleModelRepository;
 
@@ -24,4 +25,10 @@ public class VehicleModelRepositoryImpl implements VehicleModelRepository {
         return em.createQuery("SELECT vm FROM VehicleModel vm where vm.name = :nameValue", VehicleModel.class)
                 .setParameter("nameValue", name).getSingleResult();
     }
+
+    @Override
+    public VehicleModel get(int id) {
+        return em.find(VehicleModel.class, id);
+    }
+
 }
