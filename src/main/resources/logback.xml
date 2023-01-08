@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <logger name="org.springframework.security.web.csrf.CsrfFilter" level="debug"/>
+   <!-- <logger name="org.springframework.security.web.csrf.CsrfFilter" level="debug"/>-->
+    <logger name="ru.dmatveeva.web.rest.CoordinateRestController" level="debug"/>
     <logger name="org.springframework.web.filter" level="debug"/>
 
 

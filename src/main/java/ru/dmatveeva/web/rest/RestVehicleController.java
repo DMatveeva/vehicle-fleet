@@ -78,15 +78,12 @@ public class RestVehicleController {
             }
         }
 
-
         return vehicleTos;
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleTo> create(@RequestBody VehicleTo vehicleTo) {
         Manager manager = SecurityUtil.getAuthManager();
-
-
 
        // checkNew(newVehicle);
         VehicleUtils.checkEnterpriseIsConsistent(manager, vehicleTo.getEnterpriseId());

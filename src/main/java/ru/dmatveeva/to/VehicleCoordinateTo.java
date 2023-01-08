@@ -1,10 +1,10 @@
 package ru.dmatveeva.to;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.dmatveeva.model.Track;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class VehicleCoordinateTo {
 
@@ -18,14 +18,19 @@ public class VehicleCoordinateTo {
     private Double lon;
 
     @JsonProperty
-    private Date visited;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private ZonedDateTime visited;
 
-    public VehicleCoordinateTo(Integer id, Integer track_id, Double lat, Double lon, Date visited) {
+    @JsonProperty
+    private String zone;
+
+    public VehicleCoordinateTo(Integer id, Integer track_id, Double lat, Double lon, ZonedDateTime visited) {
         this.id = id;
         this.track_id = track_id;
         this.lat = lat;
         this.lon = lon;
         this.visited = visited;
+        this.zone = visited.getZone().getId();
     }
 
     public Integer getId() {
@@ -60,11 +65,19 @@ public class VehicleCoordinateTo {
         this.lon = lon;
     }
 
-    public Date getVisited() {
+    public ZonedDateTime getVisited() {
         return visited;
     }
 
-    public void setVisited(Date visited) {
+    public void setVisited(ZonedDateTime visited) {
         this.visited = visited;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
     }
 }
