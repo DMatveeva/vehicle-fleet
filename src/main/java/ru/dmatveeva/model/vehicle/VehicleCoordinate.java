@@ -2,8 +2,8 @@ package ru.dmatveeva.model.vehicle;
 
 
 import com.vividsolutions.jts.geom.Point;
-import net.bytebuddy.asm.Advice;
 import ru.dmatveeva.model.AbstractBaseEntity;
+import ru.dmatveeva.model.Track;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 
 @NamedQueries({
         @NamedQuery(name = VehicleCoordinate.BY_VEHICLE_AND_PERIOD,
-                query = "SELECT c FROM VehicleCoordinate c WHERE c.vehicle=?1 and c.visited between ?2 and ?3")
+                query = "SELECT c FROM VehicleCoordinate c WHERE c.vehicle=?1 and c.visited between ?2 and ?3"),
+        @NamedQuery(name = VehicleCoordinate.BY_TRACK,
+                query = "SELECT c FROM VehicleCoordinate c WHERE c.track=?1")
 })
 
 @Entity
@@ -31,8 +32,8 @@ public class VehicleCoordinate extends AbstractBaseEntity implements Serializabl
 
     private static int SRID = 4326;
 
-    @Column(name = "track_id")
-    private Integer trackId;
+    @OneToOne
+    private Track track;
 
     @ManyToOne
     private Vehicle vehicle;
@@ -46,18 +47,15 @@ public class VehicleCoordinate extends AbstractBaseEntity implements Serializabl
     @Column(name = "visited")
     private LocalDateTime visited;
 
-    /*@Column(columnDefinition = "geometry", name="position")
-    private Point position;*/
-
     @Column(columnDefinition = "geometry(Point,4326)", name = "position")
     private Point position;
 
-    public Integer getTrackId() {
-        return trackId;
+    public Track getTrack() {
+        return track;
     }
 
-    public void setTrackId(Integer trackId) {
-        this.trackId = trackId;
+    public void setTrack(Track track) {
+        this.track = track;
     }
 
     public Double getLat() {

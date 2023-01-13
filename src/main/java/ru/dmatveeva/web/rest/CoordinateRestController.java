@@ -11,16 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dmatveeva.model.Enterprise;
+import ru.dmatveeva.model.Track;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.service.CoordinateService;
+import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleService;
 import ru.dmatveeva.to.VehicleCoordinateTo;
 import ru.dmatveeva.util.CoordinateUtils;
+import ru.dmatveeva.util.VehicleUtils;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = CoordinateRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,21 +38,17 @@ public class CoordinateRestController {
 
     VehicleService vehicleService;
 
+    public CoordinateRestController(CoordinateService coordinateService, VehicleService vehicleService, TrackService trackService) {
+        this.coordinateService = coordinateService;
+        this.vehicleService = vehicleService;
+        this.trackService = trackService;
+    }
+
+    TrackService trackService;
+
     private static final String TYPE_JSON = "json";
     private static final String TYPE_GEO_JSON = "geojson";
 
-
-    public CoordinateRestController(CoordinateService coordinateService, VehicleService vehicleService) {
-        this.coordinateService = coordinateService;
-        this.vehicleService = vehicleService;
-    }
-
-    /*@GetMapping("/coordinates/vehicle/{id}")
-    public List<VehicleCoordinateTo> getByTrack(@PathVariable int id) {
-        Vehicle v = coordinateService.getVe(id);
-        List<VehicleCoordinate> coordinates = coordinateService.getCoordinatesByTrack(track);
-        return CoordinateUtils.getCoordinatesTos(coordinates);
-    }*/
 
     @GetMapping("/coordinates/json/vehicle/{vehicleId}")
     public List<VehicleCoordinateTo> getJsonByVehicleAndPeriod(@PathVariable int vehicleId,
@@ -70,6 +71,29 @@ public class CoordinateRestController {
         List<VehicleCoordinate> coordinates = getCoordinatesByVehicleAndPeriod(vehicleId, start, end);
 
         return CoordinateUtils.getFeaturesFromCoordinatesWithTimeZone(coordinates, enterprise.getLocalTimeZone());
+    }
+
+    @GetMapping("/coordinates/tracks/vehicle/{vehicleId}")
+    public List<VehicleCoordinateTo> getTracksCoordinatesByVehicleAndPeriod(@PathVariable int vehicleId,
+                                                                          @RequestParam(name = "start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startEnterpriseZoned,
+                                                                          @RequestParam(name = "end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endEnterpriseZoned) {
+
+        Vehicle vehicle = vehicleService.get(vehicleId);
+        Enterprise enterprise = vehicle.getEnterprise();
+
+        ZonedDateTime startUTC = startEnterpriseZoned.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime endUTC = endEnterpriseZoned.withZoneSameInstant(ZoneId.of("UTC"));
+
+        LOG.debug("utc start {}", startUTC);
+        LOG.debug("utc end {}", endUTC);
+
+        List<Track> track = trackService.getTracksByVehicleAndPeriod(vehicle, startUTC.toLocalDateTime(), endUTC.toLocalDateTime());
+        List<VehicleCoordinate> coordinates = track.stream()
+                .map(t -> coordinateService.getByTrack(t))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        List<VehicleCoordinateTo> coordinateTos = CoordinateUtils.getCoordinatesTosWithTimezone(coordinates, enterprise.getLocalTimeZone());
+        return coordinateTos;
     }
 
     public List<VehicleCoordinate> getCoordinatesByVehicleAndPeriod(int vehicleId, ZonedDateTime start, ZonedDateTime end) {

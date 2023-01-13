@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS vehicle_models CASCADE;
 DROP TABLE IF EXISTS managers CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS enterprises_managers CASCADE;
+DROP TABLE IF EXISTS tracks CASCADE;
 DROP TABLE IF EXISTS vehicle_coordinates CASCADE;
 
 
@@ -97,6 +98,14 @@ CREATE TABLE users
 
 CREATE UNIQUE INDEX vehicle_unique_vin_idx ON vehicles (vin);
 
+CREATE TABLE tracks
+(
+    id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    vehicle_id        INTEGER not null ,
+    started       TIMESTAMP,
+    finished       TIMESTAMP NOT NULL,
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE
+);
 
 CREATE TABLE vehicle_coordinates
 (
@@ -107,6 +116,6 @@ CREATE TABLE vehicle_coordinates
     lon           FLOAT                 NOT NULL,
     position      geometry(POINT, 4326) NOT NULL,
     visited        TIMESTAMP NOT NULL ,
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE
-
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES tracks (id) ON DELETE CASCADE
 );

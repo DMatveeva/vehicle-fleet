@@ -50,7 +50,7 @@ public class CoordinateUtils {
         Point point = new Point(c.getLat(), c.getLon());
         f.setGeometry(point);
         Map<String, Object> properties = new HashMap<>();
-        properties.put("track_id", c.getTrackId());
+        properties.put("track_id", c.getTrack().getId());
         properties.put("vehicle_id", c.getVehicle().getId());
         properties.put("visited", visitedStr);
         f.setProperties(properties);
@@ -62,7 +62,7 @@ public class CoordinateUtils {
         ZonedDateTime ldtVisitedZoned = ldtVisited.atZone(ZoneId.of("UTC"));
 
         return new VehicleCoordinateTo(vehicleCoordinate.getId(),
-                vehicleCoordinate.getTrackId(),
+                vehicleCoordinate.getTrack().getId(),
                 vehicleCoordinate.getLat(),
                 vehicleCoordinate.getLon(),
                 ldtVisitedZoned);
@@ -73,7 +73,7 @@ public class CoordinateUtils {
         ZonedDateTime zoned = localZoned.withZoneSameInstant(ZoneId.of(zone));
 
         return new VehicleCoordinateTo(vehicleCoordinate.getId(),
-                vehicleCoordinate.getTrackId(),
+                vehicleCoordinate.getTrack().getId(),
                 vehicleCoordinate.getLat(),
                 vehicleCoordinate.getLon(),
                 zoned);
