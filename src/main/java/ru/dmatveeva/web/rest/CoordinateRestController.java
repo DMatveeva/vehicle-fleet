@@ -1,5 +1,6 @@
 package ru.dmatveeva.web.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.geojson.FeatureCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +18,18 @@ import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.service.CoordinateService;
 import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleService;
+import ru.dmatveeva.to.TripTo;
 import ru.dmatveeva.to.VehicleCoordinateTo;
+import ru.dmatveeva.to.VehicleCoordinateWithAddressTo;
 import ru.dmatveeva.util.CoordinateUtils;
+import ru.dmatveeva.util.TripUtils;
 import ru.dmatveeva.util.VehicleUtils;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,6 +114,66 @@ public class CoordinateRestController {
         return coordinateService.getCoordinatesByVehicleAndPeriod(
                 vehicle, utcStart.toLocalDateTime(), utcEnd.toLocalDateTime());
     }
+
+    @GetMapping("/coordinates/trips/vehicle/{vehicleId}")
+    public List<TripTo> getTripsByVehicleAndPeriod(@PathVariable int vehicleId,
+                                                                            @RequestParam(name = "start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startEnterpriseZoned,
+                                                                            @RequestParam(name = "end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endEnterpriseZoned) throws JsonProcessingException {
+
+        Vehicle vehicle = vehicleService.get(vehicleId);
+        Enterprise enterprise = vehicle.getEnterprise();
+
+        ZonedDateTime startUTC = startEnterpriseZoned.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime endUTC = endEnterpriseZoned.withZoneSameInstant(ZoneId.of("UTC"));
+
+        LOG.debug("utc start {}", startUTC);
+        LOG.debug("utc end {}", endUTC);
+
+        List<Track> tracks = trackService.getTracksByVehicleAndPeriod(vehicle, startUTC.toLocalDateTime(), endUTC.toLocalDateTime());
+        List<TripTo> tripTos = tracks.stream()
+                .map(track -> trackToTripTo(track, enterprise.getLocalTimeZone()))
+                .collect(Collectors.toList());
+
+        return tripTos;
+    }
+
+    private TripTo trackToTripTo (Track track, String enterpriseTz) {
+        ZonedDateTime startedZdt = getZdtFromLdtUtc(track.getStarted(), enterpriseTz);
+        ZonedDateTime finishedZdt = getZdtFromLdtUtc(track.getFinished(), enterpriseTz);
+
+        TripTo tripTo = new TripTo();
+        tripTo.setStarted(startedZdt);
+        tripTo.setFinished(finishedZdt);
+        tripTo.setZone(enterpriseTz);
+        tripTo.setVehicle_id(track.getVehicle().getId());
+
+        List<VehicleCoordinate> coordinates = coordinateService.getByTrack(track);
+        VehicleCoordinate start = coordinates.stream()
+                .min( Comparator.comparing(VehicleCoordinate::getVisited))
+                .orElse(null);
+
+        VehicleCoordinate finish = coordinates.stream()
+                .max( Comparator.comparing(VehicleCoordinate::getVisited))
+                .orElse(null);
+
+        String startAddress = TripUtils.getAddressFromCoordinate(start.getLat(), start.getLon());
+        VehicleCoordinateWithAddressTo startTo = new VehicleCoordinateWithAddressTo(start.getLat(), start.getLon(), startAddress);
+
+        String finishAddress = TripUtils.getAddressFromCoordinate(finish.getLat(), finish.getLon());
+        VehicleCoordinateWithAddressTo finishTo = new VehicleCoordinateWithAddressTo(finish.getLat(), finish.getLon(), finishAddress);
+
+        tripTo.setStart(startTo);
+        tripTo.setFinish(finishTo);
+        return tripTo;
+
+    }
+
+    private ZonedDateTime getZdtFromLdtUtc(LocalDateTime ldtUtc, String tz) {
+        ZonedDateTime zdtUtc = ldtUtc.atZone(ZoneId.of("UTC"));
+        return zdtUtc.withZoneSameInstant(ZoneId.of(tz));
+    }
+
+
 
 
 }

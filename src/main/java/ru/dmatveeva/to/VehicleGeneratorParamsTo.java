@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class VehicleGeneratorParams {
+public class VehicleGeneratorParamsTo {
 
     @JsonProperty
     List<Integer> entepriseIds;

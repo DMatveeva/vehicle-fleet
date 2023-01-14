@@ -17,7 +17,7 @@ import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.service.VehicleGeneratorService;
 import ru.dmatveeva.service.VehicleService;
-import ru.dmatveeva.to.VehicleGeneratorParams;
+import ru.dmatveeva.to.VehicleGeneratorParamsTo;
 import ru.dmatveeva.to.VehicleTo;
 import ru.dmatveeva.util.SecurityUtil;
 import ru.dmatveeva.util.VehicleUtils;
@@ -125,7 +125,7 @@ public class RestVehicleController {
 
 
     @PostMapping(value = "/generate", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void generate(@RequestBody VehicleGeneratorParams vehicleGeneratorParams) {
+    public void generate(@RequestBody VehicleGeneratorParamsTo vehicleGeneratorParams) {
         vehicleGeneratorService.generateVehiclesForEnterprises(vehicleGeneratorParams.getEntepriseIds(),
                 vehicleGeneratorParams.getNumVehicles());
     }
