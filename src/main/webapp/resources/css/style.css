@@ -40,6 +40,15 @@ table tr:nth-child(even){
 .pagination li:hover{
     cursor: pointer;
 }
-table tbody tr {
+.table tbody tr {
     display: none;
+}
+.col {
+    border: 1px solid #cecece;
+}
+.col-6 {
+    border: 1px solid #cecece;
+}
+.p {
+    text-align: center;
 }

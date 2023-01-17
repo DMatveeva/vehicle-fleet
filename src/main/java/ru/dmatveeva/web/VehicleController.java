@@ -3,7 +3,7 @@ package ru.dmatveeva.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +44,12 @@ public class VehicleController {
         List<VehicleModel> models = vehicleModelService.getAll();
         model.addAttribute("models", models);
         return "vehicleForm.html";
+    }
+
+    @GetMapping("/{id}")
+    public String get(@PathVariable int id, Model model) {
+        model.addAttribute("vehicle", vehicleService.get(id));
+        return "vehicle.html";
     }
 
     @GetMapping("/delete")

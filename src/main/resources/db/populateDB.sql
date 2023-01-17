@@ -71,8 +71,8 @@ values (100005, '2008-01-01 18:00', '2008-01-01 22:00'),
 INSERT INTO vehicle_coordinates(id, track_id, vehicle_id, lat, lon, position, visited)
 values (100021, 100019, 100005, 33.957080, -118.373588, st_setsrid(st_makepoint(-118.373588, 33.957080), 4326),  '2008-01-01 17:00');
 INSERT INTO vehicle_coordinates(id, track_id, vehicle_id, lat, lon, position, visited)
-values (100022, 100019, 100005, 56.7538337, 38.6211812, st_setsrid(st_makepoint(38.6211812, 56.7538337), 4326),  '2008-01-01 19:00');
+values (100022, 100019, 100005, 34.050818, -118.046074, st_setsrid(st_makepoint(-118.046074, 34.050818), 4326),  '2008-01-01 19:00');
 INSERT INTO vehicle_coordinates(id, track_id, vehicle_id, lat, lon, position, visited)
-values (100023, 100019, 100005, 57.7538337, 39.6211812, st_setsrid(st_makepoint(39.6211812, 57.7538337), 4326),  '2008-01-01 21:00');
+values (100023, 100019, 100005, 33.853718, -118.070983, st_setsrid(st_makepoint(-118.0709837, 33.853718), 4326),  '2008-01-01 21:00');
 INSERT INTO vehicle_coordinates(id, track_id, vehicle_id, lat, lon, position, visited)
 values (100024, 100019, 100005, 34.097753, -118.354832, st_setsrid(st_makepoint(-118.354832, 34.097753), 4326),  '2008-01-01 23:00');

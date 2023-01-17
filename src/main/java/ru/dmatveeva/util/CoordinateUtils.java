@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class CoordinateUtils {
                 vehicleCoordinate.getLon(),
                 ldtVisitedZoned);
     }
+
     public static VehicleCoordinateTo getCoordinateToWithTimezone(VehicleCoordinate vehicleCoordinate, String zone) {
         LocalDateTime ldtVisited = vehicleCoordinate.getVisited();
         ZonedDateTime localZoned = ldtVisited.atZone(ZoneId.of("UTC"));
@@ -77,5 +79,34 @@ public class CoordinateUtils {
                 vehicleCoordinate.getLat(),
                 vehicleCoordinate.getLon(),
                 zoned);
+    }
+
+    public static double[][] getPoints(List<VehicleCoordinate> coordinates) {
+        double[][] points = new double[coordinates.size()][2];
+        for (int i = 0; i < coordinates.size(); i++) {
+            VehicleCoordinate c = coordinates.get(i);
+            double[] p = {c.getLat(), c.getLon()};
+            points[i] = p;
+        }
+        return points;
+    }
+
+    public static double[] getCenter(List<VehicleCoordinate> coordinates) {
+        Double minLat = coordinates.stream()
+                .min(Comparator.comparing(VehicleCoordinate::getLat)).get().getLat();
+
+        Double maxLat = coordinates.stream()
+                .max(Comparator.comparing(VehicleCoordinate::getLat)).get().getLat();
+
+        Double minLon = coordinates.stream()
+                .min(Comparator.comparing(VehicleCoordinate::getLon)).get().getLat();
+
+        Double maxLon= coordinates.stream()
+                .max(Comparator.comparing(VehicleCoordinate::getLon)).get().getLat();
+
+        double cLat = (minLat + maxLat) / 2;
+        double cLon = (minLon + maxLon) / 2;
+
+        return new double[]{cLat, cLon};
     }
 }

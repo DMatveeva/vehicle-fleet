@@ -21,4 +21,8 @@ public class TrackService {
         return trackRepository.getTracksByVehicleAndPeriod(vehicle, startUTC, endUTC);
 
     }
+
+    public Track get(int id) {
+        return trackRepository.get(id);
+    }
 }

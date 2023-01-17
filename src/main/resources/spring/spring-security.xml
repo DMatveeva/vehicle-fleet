@@ -17,9 +17,11 @@
         <csrf token-repository-ref="tokenRepository"/>
     </http>
 
+
     <http>
         <intercept-url pattern="/login" access="permitAll()"/>
         <intercept-url pattern="/**" access="permitAll()"/>
+        <intercept-url pattern="/webjars/**" access="permitAll()"/>
         <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
 
         <form-login login-page="/login" default-target-url="/enterprises"

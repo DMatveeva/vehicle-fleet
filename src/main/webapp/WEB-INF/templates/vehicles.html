@@ -30,7 +30,9 @@
         <th>Purchase Date</th>
     </tr>
     <tr th:each="vehicle : ${vehicles}">
-        <td th:text="${vehicle.vin}"/>
+        <td>
+            <a th:href="@{/vehicles/{id}(id=${vehicle.id})}" th:text="${vehicle.vin}" />
+        </td>
         <td th:text="${vehicle.vehicleModel.name}"/>
         <td th:text="${vehicle.enterprise.name}"/>
         <td th:text="${vehicle.color}"/>
