@@ -42,4 +42,14 @@ public class CoordinateRepositoryImpl implements CoordinateRepository {
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getResultList();
     }
+
+    @Override
+    @Transactional
+    public VehicleCoordinate save(VehicleCoordinate vehicleCoordinate) {
+        if (vehicleCoordinate.isNew()) {
+            em.persist(vehicleCoordinate);
+            return vehicleCoordinate;
+        }
+        return em.merge(vehicleCoordinate);
+    }
 }

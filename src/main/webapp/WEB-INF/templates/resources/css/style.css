@@ -52,3 +52,4 @@ table tr:nth-child(even){
 .p {
     text-align: center;
 }
+.table-bordered>:not(caption)>*{border-width:1px 0}.table-bordered>:not(caption)>*>*{border-width:0 1px}

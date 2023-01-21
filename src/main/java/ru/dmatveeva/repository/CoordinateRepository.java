@@ -15,5 +15,6 @@ public interface CoordinateRepository {
     List<VehicleCoordinate> getCoordinatesByVehicleAndPeriod(Vehicle vehicle, LocalDateTime startUTC, LocalDateTime endUTC);
 
     List<VehicleCoordinate> getByTrack(Track track);
-}
 
+    VehicleCoordinate save(VehicleCoordinate vehicleCoordinate);
+}

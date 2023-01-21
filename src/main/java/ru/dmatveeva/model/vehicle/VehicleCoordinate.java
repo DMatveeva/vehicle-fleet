@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
         @NamedQuery(name = VehicleCoordinate.BY_VEHICLE_AND_PERIOD,
                 query = "SELECT c FROM VehicleCoordinate c WHERE c.vehicle=?1 and c.visited between ?2 and ?3"),
         @NamedQuery(name = VehicleCoordinate.BY_TRACK,
-                query = "SELECT c FROM VehicleCoordinate c WHERE c.track=?1")
+                query = "SELECT c FROM VehicleCoordinate c WHERE c.track=?1 order by c.visited")
 })
 
 @Entity

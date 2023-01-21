@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import ru.dmatveeva.model.Track;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.service.CoordinateService;
+import ru.dmatveeva.service.TrackGeneratorService;
 import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleService;
 import ru.dmatveeva.to.TripTo;
@@ -41,13 +44,15 @@ public class CoordinateRestController {
     static final String REST_URL = "/rest";
 
     CoordinateService coordinateService;
+    TrackGeneratorService trackGeneratorService;
 
     VehicleService vehicleService;
 
-    public CoordinateRestController(CoordinateService coordinateService, VehicleService vehicleService, TrackService trackService) {
+    public CoordinateRestController(CoordinateService coordinateService, VehicleService vehicleService, TrackService trackService, TrackGeneratorService trackGeneratorService) {
         this.coordinateService = coordinateService;
         this.vehicleService = vehicleService;
         this.trackService = trackService;
+        this.trackGeneratorService = trackGeneratorService;
     }
 
     TrackService trackService;
@@ -135,6 +140,21 @@ public class CoordinateRestController {
                 .collect(Collectors.toList());
 
         return tripTos;
+    }
+
+    @PostMapping("trip/generate/vehicle/{id}")
+    public ResponseEntity<Boolean> generateTrack(
+            @PathVariable int id,
+            @RequestParam double[] start,
+            @RequestParam double[] finish,
+            @RequestParam int lengthKm,
+            @RequestParam int maxSpeedKmH,
+            @RequestParam int maxAccelerationMSS) {
+
+        Vehicle vehicle = vehicleService.get(id);
+        trackGeneratorService.generateTrack(vehicle, start, finish, lengthKm, maxSpeedKmH, maxAccelerationMSS);
+
+        return ResponseEntity.ok().build();
     }
 
     private TripTo trackToTripTo (Track track, String enterpriseTz) {

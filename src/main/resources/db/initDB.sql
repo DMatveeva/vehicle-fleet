@@ -103,7 +103,7 @@ CREATE TABLE tracks
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     vehicle_id        INTEGER not null ,
     started       TIMESTAMP,
-    finished       TIMESTAMP NOT NULL,
+    finished       TIMESTAMP,
     FOREIGN KEY (vehicle_id) REFERENCES vehicles (id) ON DELETE CASCADE
 );
 

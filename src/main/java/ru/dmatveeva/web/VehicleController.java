@@ -11,6 +11,7 @@ import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.service.EnterpriseService;
+import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleModelService;
 import ru.dmatveeva.service.VehicleService;
 
@@ -32,10 +33,13 @@ public class VehicleController {
 
     private EnterpriseService enterpriseService;
 
-    public VehicleController(VehicleService vehicleService, VehicleModelService vehicleModelService, EnterpriseService enterpriseService) {
+    private TrackService trackService;
+
+    public VehicleController(VehicleService vehicleService, VehicleModelService vehicleModelService, EnterpriseService enterpriseService, TrackService trackService) {
         this.vehicleService = vehicleService;
         this.vehicleModelService = vehicleModelService;
         this.enterpriseService = enterpriseService;
+        this.trackService = trackService;
     }
 
     @GetMapping("/create")
@@ -48,7 +52,9 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     public String get(@PathVariable int id, Model model) {
-        model.addAttribute("vehicle", vehicleService.get(id));
+        Vehicle vehicle =  vehicleService.get(id);
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("tracks", trackService.getTracksByVehicle(vehicle));
         return "vehicle.html";
     }
 

@@ -25,4 +25,8 @@ public class TrackService {
     public Track get(int id) {
         return trackRepository.get(id);
     }
+
+    public List<Track> getTracksByVehicle(Vehicle vehicle) {
+        return trackRepository.getTracksByVehicle(vehicle);
+    }
 }

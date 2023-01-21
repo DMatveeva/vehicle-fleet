@@ -99,10 +99,10 @@ public class CoordinateUtils {
                 .max(Comparator.comparing(VehicleCoordinate::getLat)).get().getLat();
 
         Double minLon = coordinates.stream()
-                .min(Comparator.comparing(VehicleCoordinate::getLon)).get().getLat();
+                .min(Comparator.comparing(VehicleCoordinate::getLon)).get().getLon();
 
         Double maxLon= coordinates.stream()
-                .max(Comparator.comparing(VehicleCoordinate::getLon)).get().getLat();
+                .max(Comparator.comparing(VehicleCoordinate::getLon)).get().getLon();
 
         double cLat = (minLat + maxLat) / 2;
         double cLon = (minLon + maxLon) / 2;
