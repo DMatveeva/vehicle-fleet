@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.dmatveeva.model.Enterprise;
+import ru.dmatveeva.model.Report;
+import ru.dmatveeva.model.VehicleReport;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleModel;
 import ru.dmatveeva.service.EnterpriseService;
 import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleModelService;
 import ru.dmatveeva.service.VehicleService;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -41,6 +44,16 @@ public class VehicleController {
         this.enterpriseService = enterpriseService;
         this.trackService = trackService;
     }
+
+
+    @GetMapping("/report/{id}")
+    public String report(@PathVariable int id, Model model){
+        model.addAttribute("report", new VehicleReport());
+        Vehicle vehicle =  vehicleService.get(id);
+        model.addAttribute("vehicleId", vehicle.getId());
+        return "reportForm.html";
+    }
+
 
     @GetMapping("/create")
     public String create(Model model){

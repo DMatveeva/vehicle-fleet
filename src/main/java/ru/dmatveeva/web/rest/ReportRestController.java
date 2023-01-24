@@ -25,7 +25,7 @@ public class ReportRestController {
     }
 
     @PostMapping("/generate")
-    public Report getJsonByVehicleAndPeriod(@RequestBody MileageReport requestReport) {
+    public Report generate(@RequestBody MileageReport requestReport) {
         String period = requestReport.getPeriod();
         LocalDate start = requestReport.getStart();
         LocalDate end = requestReport.getEnd();
