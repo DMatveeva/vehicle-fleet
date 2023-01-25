@@ -23,7 +23,6 @@ import ru.dmatveeva.util.SecurityUtil;
 import ru.dmatveeva.util.VehicleUtils;
 
 import java.net.URI;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -64,15 +63,7 @@ public class RestVehicleController {
         for (Enterprise enterprise: enterprises) {
             List<Vehicle> vehiclesByEnterprise = vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize);
             vehicles.addAll(vehicleService.getByEnterprisePaginated(enterprise, offset, pageSize));
-
-            String enterpriseTimeZoneStr = enterprise.getLocalTimeZone();
-            ZoneId enterpriseZoneId = ZoneId.of(enterpriseTimeZoneStr);
-            TimeZone enterpriseTimeZone = TimeZone.getTimeZone(enterpriseZoneId);
-            long enterpriseOffset = enterpriseTimeZone.getRawOffset();
-            long clientOffset = timezone.getRawOffset() * 2L;
-            long finalOffset = enterpriseOffset + clientOffset;
-
-            vehicleTos.addAll(VehicleUtils.getVehicleTosWithLocalTime(vehicles, finalOffset));
+            vehicleTos.addAll(VehicleUtils.getVehicleTosWithLocalTime(vehicles, timezone.getID()));
             if (vehiclesByEnterprise.size() == pageSize) {
                 break;
             }

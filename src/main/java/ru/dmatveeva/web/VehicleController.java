@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.dmatveeva.model.Enterprise;
-import ru.dmatveeva.model.Report;
+import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.VehicleReport;
 import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleModel;
@@ -16,17 +16,15 @@ import ru.dmatveeva.service.EnterpriseService;
 import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleModelService;
 import ru.dmatveeva.service.VehicleService;
-
+import ru.dmatveeva.util.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
 
 @Controller
 @RequestMapping("/vehicles")
@@ -78,15 +76,21 @@ public class VehicleController {
         return "redirect:/vehicles/all";
     }
 
-    @GetMapping("/update")
-    public String update(HttpServletRequest request, Model model){
-        Vehicle vehicle = vehicleService.get(getId(request));
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable int id,  HttpServletRequest request, Model model){
+        Vehicle vehicle = vehicleService.get(id);
         model.addAttribute("vehicle", vehicle);
         List<VehicleModel> models = vehicleModelService.getAll();
         VehicleModel vehicleModel = vehicle.getVehicleModel();
         models.remove(vehicleModel);
         models.add(0, vehicleModel);
         model.addAttribute("models", models);
+
+        Manager manager = SecurityUtil.getAuthManager();
+        List<Enterprise> enterprises = manager.getEnterprise();
+        model.addAttribute("enterprises", enterprises);
+
+
         return "vehicleForm.html";
     }
 
@@ -104,59 +108,53 @@ public class VehicleController {
                                  @RequestParam("color") String color,
                                  @RequestParam("costUsd") BigDecimal costUsd,
                                  @RequestParam("mileage") Integer mileage,
-                                 @RequestParam("productionYear") Integer productionYear
+                                 @RequestParam("productionYear") Integer productionYear,
+                                 @RequestParam("purchaseDate") String purchaseDateStr,
+                                 @RequestParam("enterprise") Integer enterpriseId
                                  ) {
-        /*String vin = request.getParameter("vin");
-        String model = request.getParameter("model");
-        BigDecimal costUsd = BigDecimal.valueOf(Double.parseDouble(request.getParameter("costUsd")));
-        String color = request.getParameter("color");
-        int mileage = Integer.parseInt(request.getParameter("mileage"));
-        int productionYear = Integer.parseInt(request.getParameter("productionYear"));
-     //   Date purchaseDate = new Date()Date(request.getParameter("purchaseDate"));
+        VehicleModel vehicleModel = vehicleModelService.get(vehicleModelId);
+        System.out.println(purchaseDateStr);
 
-        VehicleModel vehicleModel = vehicleModelService.getByName(model);
-        String id = request.getParameter("id");
+        //  01/15/2020 11:00 PM
+
+        LocalDateTime purchaseDate = getLdtFromString(purchaseDateStr);
+        Enterprise enterprise = enterpriseService.get(enterpriseId);
         if (id.isEmpty()) {
-            Vehicle vehicle = new Vehicle(vehicleModel, vin, costUsd, color, mileage, productionYear);
+            Vehicle vehicle = new Vehicle(vehicleModel,
+                    vin, costUsd, color, mileage, productionYear,
+                    purchaseDate, null, enterprise);
             vehicleService.create(vehicle);
         } else {
-            Vehicle vehicle = new Vehicle(Integer.parseInt(id), vehicleModel, vin, costUsd, color, mileage, productionYear);
+            Vehicle vehicle = new Vehicle(Integer.parseInt(id), vehicleModel,
+                    vin, costUsd, color, mileage, productionYear,
+                    purchaseDate,null, enterprise);
             vehicleService.update(vehicle);
-        }*/
+        }
+        return "redirect:/vehicles?enterpriseId=" + enterprise.getId();
+    }
 
-        VehicleModel vehicleModel = vehicleModelService.get(vehicleModelId);
-
-
-        return "redirect:/vehicles?enterpriseId={}";
+    LocalDateTime getLdtFromString(String ldtStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+        return LocalDateTime.parse(ldtStr, formatter);
     }
 
     @GetMapping
     public String getVehiclesByEnterprise(HttpServletRequest request, Model model){
         String paramId = Objects.requireNonNull(request.getParameter("enterpriseId"));
+
         Enterprise enterprise = enterpriseService.get(Integer.parseInt(paramId));
         List<Vehicle> vehicles = vehicleService.getByEnterprisePaginated(enterprise, 0, 20);
-        model.addAttribute("vehicles", vehicles);
-
-        String enterpriseTimeZoneStr = enterprise.getLocalTimeZone();
-        ZoneId enterpriseZoneId = ZoneId.of(enterpriseTimeZoneStr);
-        TimeZone enterpriseTimeZone = TimeZone.getTimeZone(enterpriseZoneId);
-        long enterpriseOffset = enterpriseTimeZone.getRawOffset();
-
-        Locale locale = request.getLocale();
-        Calendar calendar = Calendar.getInstance(locale);
-        TimeZone timeZone = calendar.getTimeZone();
-        long clientOffset = timeZone.getRawOffset();
-        /*ZoneId zoneId = timeZone.toZoneId();
-        ZoneRules rules = zoneId.getRules();*/
-
-        long finalOffset = enterpriseOffset + clientOffset;
-        model.addAttribute("offset", finalOffset);
 
         for (Vehicle vehicle: vehicles) {
-            long localTime = vehicle.getPurchaseDate().getTime() + finalOffset;
-            Date localDate = new Date(localTime);
-            vehicle.setPurchaseDate(localDate);
+            LocalDateTime oldDateTime = vehicle.getPurchaseDate();
+
+            LocalDateTime newDateTime = oldDateTime.atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(ZoneId.of(enterprise.getLocalTimeZone()))
+                    .toLocalDateTime();
+            vehicle.setPurchaseDate(newDateTime);
         }
+        model.addAttribute("vehicles", vehicles);
+
 
         return "vehicles.html";
     }

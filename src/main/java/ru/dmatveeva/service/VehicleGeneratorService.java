@@ -13,9 +13,10 @@ import ru.dmatveeva.repository.VehicleRepository;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -48,8 +49,8 @@ public class VehicleGeneratorService {
 
     private static int driverNum = 0;
 
-    private static Date MIN_DATE_OF_PURCHASE_2000 = new Date(946684800000L);
-    private static Date MAX_DATE_OF_PURCHASE_2020 = new Date(1577836800000L);
+    private static final LocalDateTime MIN_DATE_OF_PURCHASE_2000 = LocalDateTime.of(2000, 1, 1, 0,0);
+    private static final LocalDateTime MAX_DATE_OF_PURCHASE_2020 = LocalDateTime.of(2020, 1, 1, 0,0);;
 
 
     List<VehicleModel> vehicleModels;
@@ -109,7 +110,7 @@ public class VehicleGeneratorService {
         String color = getColor();
         int mileage = getMileage();
         int productionYear = getProductionYear();
-        Date purchaseDate = generateDate(MIN_DATE_OF_PURCHASE_2000, MAX_DATE_OF_PURCHASE_2020);
+        LocalDateTime purchaseDate = generateDate(MIN_DATE_OF_PURCHASE_2000, MAX_DATE_OF_PURCHASE_2020);
 
         List<Driver> drivers = getDrivers(enterprise, vehicle, isActive);
         vehicle.setVehicleModel(vehicleModel);
@@ -128,14 +129,11 @@ public class VehicleGeneratorService {
 
 
 
-    public Date generateDate(Date startInclusive, Date endExclusive) {
-        long startMillis = startInclusive.getTime();
-        long endMillis = endExclusive.getTime();
-        long randomMillisSinceEpoch = ThreadLocalRandom
-                .current()
-                .nextLong(startMillis, endMillis);
-
-        return new Date(randomMillisSinceEpoch);
+    public LocalDateTime generateDate(LocalDateTime startInclusive, LocalDateTime endExclusive) {
+        long minDay = startInclusive.toEpochSecond(ZoneOffset.UTC);
+        long maxDay = endExclusive.toEpochSecond(ZoneOffset.UTC);
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDateTime.ofEpochSecond(randomDay, 0, ZoneOffset.UTC);
     }
 
 

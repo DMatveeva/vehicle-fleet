@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class VehicleTo {
 
@@ -34,12 +34,12 @@ public class VehicleTo {
 
     @JsonProperty
     @JsonFormat(pattern="dd-MM-yyyy HH:mm")
-    private Date purchaseDate;
+    private LocalDateTime purchaseDate;
 
     public VehicleTo() {
     }
 
-    public VehicleTo(Integer id, Integer modelId, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterpriseId, Date purchaseDate) {
+    public VehicleTo(Integer id, Integer modelId, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Integer enterpriseId, LocalDateTime purchaseDate) {
         this.id = id;
         this.modelId = modelId;
         this.vin = vin;
@@ -129,11 +129,11 @@ public class VehicleTo {
         this.enterpriseId = enterpriseId;
     }
 
-    public Date getPurchaseDate() {
+    public LocalDateTime getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(LocalDateTime purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 }

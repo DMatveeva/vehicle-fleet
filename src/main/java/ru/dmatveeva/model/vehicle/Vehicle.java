@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NamedQueries({
@@ -68,42 +68,22 @@ public class Vehicle extends AbstractBaseEntity {
     private Enterprise enterprise;
 
     @Column(name = "purchase_date")
-    private Date purchaseDate;
+    private LocalDateTime purchaseDate;
 
-    public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
-        super(id);
-        this.vehicleModel = vehicleModel;
-        this.vin = vin;
-        this.costUsd = costUsd;
-        this.color = color;
-        this.mileage = mileage;
-        this.productionYear = productionYear;
-    }
-
-    public Vehicle(VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear) {
-        this.vehicleModel = vehicleModel;
-        this.vin = vin;
-        this.costUsd = costUsd;
-        this.color = color;
-        this.mileage = mileage;
-        this.productionYear = productionYear;
-    }
 
     public Vehicle() {
     }
 
-    public Vehicle(VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, List<Driver> drivers, Enterprise enterprise) {
-        this.vehicleModel = vehicleModel;
-        this.vin = vin;
-        this.costUsd = costUsd;
-        this.color = color;
-        this.mileage = mileage;
-        this.productionYear = productionYear;
-        this.drivers = drivers;
-        this.enterprise = enterprise;
-    }
-
-    public Vehicle(Integer id, VehicleModel vehicleModel, String vin, BigDecimal costUsd, String color, int mileage, int productionYear, Date purchaseDate) {
+    public Vehicle(Integer id,
+                   VehicleModel vehicleModel,
+                   String vin,
+                   BigDecimal costUsd,
+                   String color,
+                   int mileage,
+                   int productionYear,
+                   LocalDateTime purchaseDate,
+                   List<Driver> drivers,
+                   Enterprise enterprise) {
         super(id);
         this.vehicleModel = vehicleModel;
         this.vin = vin;
@@ -112,7 +92,30 @@ public class Vehicle extends AbstractBaseEntity {
         this.mileage = mileage;
         this.productionYear = productionYear;
         this.purchaseDate = purchaseDate;
+        this.drivers = drivers;
+        this.enterprise = enterprise;
     }
+
+    public Vehicle(VehicleModel vehicleModel,
+                   String vin,
+                   BigDecimal costUsd,
+                   String color,
+                   int mileage,
+                   int productionYear,
+                   LocalDateTime purchaseDate,
+                   List<Driver> drivers,
+                   Enterprise enterprise) {
+        this.vehicleModel = vehicleModel;
+        this.vin = vin;
+        this.costUsd = costUsd;
+        this.color = color;
+        this.mileage = mileage;
+        this.productionYear = productionYear;
+        this.purchaseDate = purchaseDate;
+        this.drivers = drivers;
+        this.enterprise = enterprise;
+    }
+
 
     public String getVin() {
         return vin;
@@ -178,11 +181,11 @@ public class Vehicle extends AbstractBaseEntity {
         this.enterprise = enterprise;
     }
 
-    public Date getPurchaseDate() {
+    public LocalDateTime getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(LocalDateTime purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 }
