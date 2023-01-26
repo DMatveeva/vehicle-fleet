@@ -58,6 +58,10 @@ public class VehicleController {
         model.addAttribute("vehicle", new Vehicle());
         List<VehicleModel> models = vehicleModelService.getAll();
         model.addAttribute("models", models);
+
+        Manager manager = SecurityUtil.getAuthManager();
+        List<Enterprise> enterprises = manager.getEnterprise();
+        model.addAttribute("enterprises", enterprises);
         return "vehicleForm.html";
     }
 
@@ -69,11 +73,12 @@ public class VehicleController {
         return "vehicle.html";
     }
 
-    @GetMapping("/delete")
-    public String delete(HttpServletRequest request) {
-        int id = getId(request);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable int id, HttpServletRequest request) {
+        Vehicle vehicle = vehicleService.get(id);
+        int enterpriseId = vehicle.getEnterprise().getId();
         vehicleService.delete(id);
-        return "redirect:/vehicles/all";
+        return "redirect:/vehicles?enterpriseId=" + enterpriseId;
     }
 
     @GetMapping("/update/{id}")
@@ -89,7 +94,6 @@ public class VehicleController {
         Manager manager = SecurityUtil.getAuthManager();
         List<Enterprise> enterprises = manager.getEnterprise();
         model.addAttribute("enterprises", enterprises);
-
 
         return "vehicleForm.html";
     }
@@ -113,9 +117,6 @@ public class VehicleController {
                                  @RequestParam("enterprise") Integer enterpriseId
                                  ) {
         VehicleModel vehicleModel = vehicleModelService.get(vehicleModelId);
-        System.out.println(purchaseDateStr);
-
-        //  01/15/2020 11:00 PM
 
         LocalDateTime purchaseDate = getLdtFromString(purchaseDateStr);
         Enterprise enterprise = enterpriseService.get(enterpriseId);
@@ -134,7 +135,14 @@ public class VehicleController {
     }
 
     LocalDateTime getLdtFromString(String ldtStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+        DateTimeFormatter formatter;
+        if (ldtStr.length() == 19) {
+            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+        } else if (ldtStr.length() == 18) {
+            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
+        } else {
+            throw new RuntimeException();
+        }
         return LocalDateTime.parse(ldtStr, formatter);
     }
 

@@ -59,13 +59,13 @@
     </div>
 
     <div class="form-group">
-        <label for="enterprise" class="col-sm-2 control-label">Enterprise: </label>
+        <label for="e" class="col-sm-2 control-label">Enterprise: </label>
 
         <div class="dropdown">
             <select class="form-control-lg" th:field="*{enterprise}">
-                <option th:each="enterprise : ${enterprises}"
-                        th:value="${enterprise.id}"
-                        th:text="${enterprise.name}"/>
+                <option th:each="e : ${enterprises}"
+                        th:value="${e.id}"
+                        th:text="${e.name}"/>
             </select>
         </div>
     </div>
