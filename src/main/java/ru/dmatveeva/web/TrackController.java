@@ -1,19 +1,14 @@
 package ru.dmatveeva.web;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.dmatveeva.model.Track;
-import ru.dmatveeva.model.vehicle.Vehicle;
 import ru.dmatveeva.model.vehicle.VehicleCoordinate;
 import ru.dmatveeva.service.CoordinateService;
-import ru.dmatveeva.service.TrackGeneratorService;
+import ru.dmatveeva.service.generate.TrackGeneratorService;
 import ru.dmatveeva.service.TrackService;
 import ru.dmatveeva.service.VehicleService;
 import ru.dmatveeva.util.CoordinateUtils;
@@ -52,7 +47,7 @@ public class TrackController {
 
         model.addAttribute("points", points);
         model.addAttribute("center",center);
-        return "trip.html";
+        return "route.html";
     }
 
     @GetMapping("/{id}/route")

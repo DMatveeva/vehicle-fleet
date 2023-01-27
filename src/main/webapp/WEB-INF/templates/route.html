@@ -34,7 +34,7 @@
 
     var polyline = L.polyline(points, {color: 'red', width: '2'}).addTo(map);
     var marker1 = L.marker(points[0]).addTo(map);
-    var marker2 = L.marker(points.length - 1).addTo(map);
+    var marker2 = L.marker(points[points.length - 1]).addTo(map);
 
     // zoom the map to the polyline
     map.fitBounds(polyline.getBounds());

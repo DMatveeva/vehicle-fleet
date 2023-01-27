@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dmatveeva.model.Enterprise;
 import ru.dmatveeva.model.Manager;
 import ru.dmatveeva.model.vehicle.Vehicle;
-import ru.dmatveeva.service.VehicleGeneratorService;
+import ru.dmatveeva.service.generate.VehicleGeneratorService;
 import ru.dmatveeva.service.VehicleService;
 import ru.dmatveeva.to.VehicleGeneratorParamsTo;
 import ru.dmatveeva.to.VehicleTo;

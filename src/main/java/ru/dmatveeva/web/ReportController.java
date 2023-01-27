@@ -39,21 +39,25 @@ public class ReportController {
 
         LocalDate newStart;
         LocalDate newEnd;
+        Map<String, Integer> reportResults;
         if (period.equals("year")) {
             newStart = LocalDate.of(startDate.getYear(), 1, 1);
             newEnd = LocalDate.of(endDate.getYear(), 12, 31);
+            reportResults = reportService.getReportResultsForYear(vehicleId, newStart, newEnd);
         } else if (period.equals("month")) {
             newStart = LocalDate.of(startDate.getYear(), startDate.getMonth(), 1);
             int lastDayOfMonth = endDate.getMonth().length(endDate.isLeapYear());
             newEnd = LocalDate.of(endDate.getYear(), endDate.getMonth(), lastDayOfMonth);
+            reportResults = reportService.getReportResultsForMonth(vehicleId, newStart, newEnd);
+
         } else if (period.equals("day")) {
             newStart = startDate;
             newEnd = endDate;
+            reportResults = reportService.getReportResultsForDay(vehicleId, newStart, newEnd);
+
         } else {
             throw new IllegalArgumentException("specify period : year, month, day)");
         }
-
-        Map<String, Integer> reportResults = reportService.getReportResults(vehicleId, newStart, newEnd);
         model.addAttribute("reportResults", reportResults);
 
         return "report.html";

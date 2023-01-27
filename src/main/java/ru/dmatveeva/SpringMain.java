@@ -18,13 +18,7 @@ public class SpringMain {
                 "spring/db/spring-db.xml",
                 "spring/spring-security.xml",
                 "spring/spring-mvc.xml")) {
-            System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            VehicleController controller = appCtx.getBean(VehicleController.class);
 
-            System.out.println(GeometryDecoder.decodeGeometry(
-                    "ghrlHkr~s@?DICqELI?IAsCi@ICKAuA_@i@GSA?_@?M?eA?S?W?S@wB@k@?U@{H?MI@I@u@FkBPwBTcALI@?M[mGAMC?B?KiB?KAM[aFASg@sI?CmAt@y@f@?BVlELpC",
-                    false));
-            //controller.getAll().forEach(System.out::println);
 
         }
     }
