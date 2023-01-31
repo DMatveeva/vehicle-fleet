@@ -20,15 +20,16 @@
 
     <http>
         <intercept-url pattern="/login" access="permitAll()"/>
-        <intercept-url pattern="/**" access="permitAll()"/>
         <intercept-url pattern="/webjars/**" access="permitAll()"/>
-        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
 
         <form-login login-page="/login" default-target-url="/enterprises"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/login"/>
         <logout logout-success-url="/login"/>
+<!--
         <csrf disabled="true"/>
+-->
     </http>
 
     <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>

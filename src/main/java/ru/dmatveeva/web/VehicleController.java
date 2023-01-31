@@ -84,6 +84,10 @@ public class VehicleController {
     @GetMapping("/update/{id}")
     public String update(@PathVariable int id,  HttpServletRequest request, Model model){
         Vehicle vehicle = vehicleService.get(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
+
+        String dateFromatted = vehicle.getPurchaseDate().format(formatter);
+        model.addAttribute("pDate", dateFromatted);
         model.addAttribute("vehicle", vehicle);
         List<VehicleModel> models = vehicleModelService.getAll();
         VehicleModel vehicleModel = vehicle.getVehicleModel();
@@ -133,6 +137,7 @@ public class VehicleController {
         }
         return "redirect:/vehicles?enterpriseId=" + enterprise.getId();
     }
+
 
     LocalDateTime getLdtFromString(String ldtStr) {
         DateTimeFormatter formatter;
